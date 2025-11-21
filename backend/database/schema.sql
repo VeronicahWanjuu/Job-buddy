@@ -1,8 +1,6 @@
 -- ================================================================
 -- JOBBUDDY DATABASE SCHEMA 
-
 -- Database: SQLite
-
 -- ================================================================
 
 PRAGMA foreign_keys = ON;
@@ -259,9 +257,9 @@ CREATE TABLE IF NOT EXISTS cv_analyses (
     cv_file_path VARCHAR(500) NULL,
     job_description TEXT NOT NULL,
     ats_score INTEGER NOT NULL,
-    matched_keywords TEXT NOT NULL,
-    missing_keywords TEXT NOT NULL,
-    suggestions TEXT NOT NULL,
+    matched_keywords TEXT,
+    missing_keywords TEXT,
+    suggestions TEXT,
     api_used VARCHAR(50) DEFAULT 'internal',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,

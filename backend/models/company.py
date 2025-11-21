@@ -1,140 +1,188 @@
-"""
+﻿"""
 Company Model
-Stores target companies for applications and outreach
+Handles target companies for job applications and outreach
 """
 
-from database.db import db, DatabaseError
+from backend.database.db import db, DatabaseError
 from datetime import datetime
-import re
+from typing import Optional, List, Dict
 
 class Company:
     """Company model with CRUD operations"""
     
-    def __init__(self, data: dict):
-        self.id = data.get('id')
-        self.user_id = data.get('user_id')
-        self.name = data.get('name')
-        self.website = data.get('website')
-        self.location = data.get('location')
-        self.industry = data.get('industry')
-        self.notes = data.get('notes')
-        self.source = data.get('source', 'Manual')
-        self.created_at = data.get('created_at')
+    def __init__(self, company_data: dict):
+        self.id = company_data.get('id')
+        self.user_id = company_data.get('user_id')
+        self.name = company_data.get('name')
+        self.website = company_data.get('website')
+        self.location = company_data.get('location')
+        self.industry = company_data.get('industry')
+        self.notes = company_data.get('notes')
+        self.source = company_data.get('source', 'Manual')
+        self.created_at = company_data.get('created_at')
+    
+    # ================================================================
+    # VALIDATION
+    # ================================================================
     
     @staticmethod
-    def validate_website(website: str) -> bool:
-        """Validate website URL format"""
-        if not website:
-            return True  # Website is optional
-        
-        url_pattern = re.compile(
-            r'^https?://'  # http:// or https://
-            r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?|'  # domain
-            r'localhost|'  # localhost
-            r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # IP
-            r'(?::\d+)?'  # optional port
-            r'(?:/?|[/?]\S+)$', re.IGNORECASE)
-        
-        return bool(url_pattern.match(website))
+    def validate_name(name: str) -> bool:
+        """Validate company name"""
+        return name and isinstance(name, str) and len(name.strip()) >= 2
     
     @staticmethod
     def validate_source(source: str) -> bool:
-        """Validate source is one of allowed values"""
-        valid_sources = ['Manual', 'CSV', 'API']
-        return source in valid_sources
+        """Validate source value"""
+        return source in ['Manual', 'CSV', 'API']
+    
+    # ================================================================
+    # CREATE
+    # ================================================================
     
     @classmethod
     def create(cls, user_id: int, name: str, website: str = None, 
                location: str = None, industry: str = None, 
                notes: str = None, source: str = 'Manual') -> 'Company':
-        """Create new company"""
-        # Validate name
-        if not name or len(name.strip()) < 2:
-            raise ValueError("Company name must be at least 2 characters")
+        """
+        Create new company (FR-3.1: Manual Company Entry)
         
-        # Validate website if provided
-        if website and not cls.validate_website(website):
-            raise ValueError("Invalid website URL format")
+        Args:
+            user_id: Owner user ID
+            name: Company name (required)
+            website: Company website URL
+            location: Company location
+            industry: Industry/sector
+            notes: User notes about the company
+            source: How company was added (Manual/CSV/API)
+            
+        Returns:
+            Company object
+            
+        Raises:
+            ValueError: If validation fails
+        """
+        # Validate name
+        if not cls.validate_name(name):
+            raise ValueError("Company name must be at least 2 characters long")
         
         # Validate source
         if not cls.validate_source(source):
             raise ValueError(f"Invalid source. Must be one of: Manual, CSV, API")
         
-        # Check for duplicate company name (case-insensitive)
+        # Check if company already exists for this user (case-insensitive)
         existing = cls.find_by_name(user_id, name)
         if existing:
-            raise ValueError(f"Company '{name}' already exists")
+            raise ValueError(f"Company '{name}' already exists in your list")
         
         try:
             company_id = db.execute_insert('''
-                INSERT INTO companies (user_id, name, website, location, industry, notes, source, created_at)
+                INSERT INTO companies 
+                (user_id, name, website, location, industry, notes, source, created_at)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (user_id, name.strip(), website, location, industry, notes, source, datetime.now().isoformat()))
+            ''', (user_id, name.strip(), website, location, industry, notes, source, 
+                  datetime.now().isoformat()))
             
             return cls.find_by_id(company_id)
         
         except DatabaseError as e:
             raise ValueError(f"Failed to create company: {e}")
     
+    # ================================================================
+    # READ
+    # ================================================================
+    
     @classmethod
-    def find_by_id(cls, company_id: int) -> 'Company':
+    def find_by_id(cls, company_id: int) -> Optional['Company']:
         """Find company by ID"""
-        data = db.execute_one('''
+        company_data = db.execute_one('''
             SELECT * FROM companies WHERE id = ?
         ''', (company_id,))
         
-        return cls(data) if data else None
+        return cls(company_data) if company_data else None
     
     @classmethod
-    def find_by_name(cls, user_id: int, name: str) -> 'Company':
-        """Find company by name (case-insensitive)"""
-        data = db.execute_one('''
-            SELECT * FROM companies WHERE user_id = ? AND LOWER(name) = LOWER(?)
-        ''', (user_id, name))
+    def find_by_name(cls, user_id: int, name: str) -> Optional['Company']:
+        """Find company by name for specific user (case-insensitive)"""
+        company_data = db.execute_one('''
+            SELECT * FROM companies 
+            WHERE user_id = ? AND name = ? COLLATE NOCASE
+        ''', (user_id, name.strip()))
         
-        return cls(data) if data else None
+        return cls(company_data) if company_data else None
     
     @classmethod
-    def find_by_user(cls, user_id: int) -> list:
-        """Find all companies for a user"""
-        companies_data = db.execute_query('''
-            SELECT * FROM companies WHERE user_id = ? ORDER BY name ASC
-        ''', (user_id,))
+    def get_all_for_user(cls, user_id: int, industry: str = None) -> List['Company']:
+        """
+        Get all companies for a user
+        
+        Args:
+            user_id: User ID
+            industry: Filter by industry (optional)
+        """
+        if industry:
+            companies_data = db.execute_query('''
+                SELECT * FROM companies 
+                WHERE user_id = ? AND industry = ?
+                ORDER BY name
+            ''', (user_id, industry))
+        else:
+            companies_data = db.execute_query('''
+                SELECT * FROM companies 
+                WHERE user_id = ?
+                ORDER BY name
+            ''', (user_id,))
         
         return [cls(data) for data in companies_data]
     
     @classmethod
-    def search(cls, user_id: int, search_term: str) -> list:
-        """Search companies by name or location"""
+    def search(cls, user_id: int, query: str) -> List['Company']:
+        """
+        Search companies by name, location, or industry
+        
+        Args:
+            user_id: User ID
+            query: Search query
+        """
+        search_pattern = f"%{query}%"
         companies_data = db.execute_query('''
             SELECT * FROM companies 
-            WHERE user_id = ? 
-            AND (LOWER(name) LIKE LOWER(?) OR LOWER(location) LIKE LOWER(?))
-            ORDER BY name ASC
-        ''', (user_id, f'%{search_term}%', f'%{search_term}%'))
+            WHERE user_id = ? AND (
+                name LIKE ? COLLATE NOCASE OR 
+                location LIKE ? COLLATE NOCASE OR 
+                industry LIKE ? COLLATE NOCASE
+            )
+            ORDER BY name
+        ''', (user_id, search_pattern, search_pattern, search_pattern))
         
         return [cls(data) for data in companies_data]
+    
+    # ================================================================
+    # UPDATE
+    # ================================================================
     
     def update(self, name: str = None, website: str = None, 
                location: str = None, industry: str = None, notes: str = None) -> bool:
-        """Update company details"""
+        """
+        Update company details
+        
+        Returns:
+            True if updated successfully
+        """
         updates = []
         params = []
         
         if name:
-            if len(name.strip()) < 2:
-                raise ValueError("Company name must be at least 2 characters")
-            # Check for duplicate (excluding self)
+            if not self.validate_name(name):
+                raise ValueError("Company name must be at least 2 characters long")
+            # Check for duplicates
             existing = Company.find_by_name(self.user_id, name)
             if existing and existing.id != self.id:
-                raise ValueError(f"Company '{name}' already exists")
+                raise ValueError(f"Company '{name}' already exists in your list")
             updates.append('name = ?')
             params.append(name.strip())
             self.name = name.strip()
         
         if website is not None:  # Allow empty string to clear website
-            if website and not self.validate_website(website):
-                raise ValueError("Invalid website URL format")
             updates.append('website = ?')
             params.append(website)
             self.website = website
@@ -167,8 +215,15 @@ class Company:
         except DatabaseError:
             return False
     
+    # ================================================================
+    # DELETE
+    # ================================================================
+    
     def delete(self) -> bool:
-        """Delete company (CASCADE will delete contacts, applications, outreach)"""
+        """
+        Delete company (CASCADE will delete contacts, applications, outreach)
+        WARNING: This permanently deletes the company and ALL related data
+        """
         try:
             affected = db.execute_delete('''
                 DELETE FROM companies WHERE id = ?
@@ -177,18 +232,70 @@ class Company:
         except DatabaseError:
             return False
     
-    def get_contacts(self) -> list:
-        """Get all contacts for this company"""
-        from models.contact import Contact
-        return Contact.find_by_company(self.id)
+    # ================================================================
+    # RELATIONSHIPS
+    # ================================================================
     
-    def get_applications(self) -> list:
-        """Get all applications for this company"""
-        from models.application import Application
-        return Application.find_by_company(self.id)
+    def get_contacts(self) -> List[Dict]:
+        """Get all contacts at this company"""
+        return db.execute_query('''
+            SELECT * FROM contacts 
+            WHERE company_id = ?
+            ORDER BY name
+        ''', (self.id,))
     
-    def to_dict(self) -> dict:
-        """Convert to dictionary"""
+    def get_applications(self) -> List[Dict]:
+        """Get all applications to this company"""
+        return db.execute_query('''
+            SELECT * FROM applications 
+            WHERE company_id = ?
+            ORDER BY created_at DESC
+        ''', (self.id,))
+    
+    def get_outreach_activities(self) -> List[Dict]:
+        """Get all outreach activities to this company"""
+        return db.execute_query('''
+            SELECT * FROM outreach_activities 
+            WHERE company_id = ?
+            ORDER BY sent_date DESC
+        ''', (self.id,))
+    
+    # ================================================================
+    # STATISTICS
+    # ================================================================
+    
+    def get_stats(self) -> Dict:
+        """Get company statistics"""
+        stats = {}
+        
+        # Count contacts
+        result = db.execute_one('''
+            SELECT COUNT(*) as count FROM contacts WHERE company_id = ?
+        ''', (self.id,))
+        stats['total_contacts'] = result['count'] if result else 0
+        
+        # Count applications by status
+        stats['applications'] = db.execute_query('''
+            SELECT status, COUNT(*) as count
+            FROM applications
+            WHERE company_id = ?
+            GROUP BY status
+        ''', (self.id,))
+        
+        # Count outreach activities
+        result = db.execute_one('''
+            SELECT COUNT(*) as count FROM outreach_activities WHERE company_id = ?
+        ''', (self.id,))
+        stats['total_outreach'] = result['count'] if result else 0
+        
+        return stats
+    
+    # ================================================================
+    # UTILITY
+    # ================================================================
+    
+    def to_dict(self) -> Dict:
+        """Convert company to dictionary"""
         return {
             'id': self.id,
             'user_id': self.user_id,
@@ -200,3 +307,9 @@ class Company:
             'source': self.source,
             'created_at': self.created_at
         }
+    
+    def __repr__(self) -> str:
+        return f"<Company(id={self.id}, name='{self.name}', user_id={self.user_id})>"
+    
+    def __str__(self) -> str:
+        return self.name
