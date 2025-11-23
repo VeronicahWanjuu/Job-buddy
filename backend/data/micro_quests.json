@@ -1,0 +1,109 @@
+{
+  "quests": [
+    {
+      "id": "mq-1",
+      "title": "Update Your LinkedIn Profile",
+      "description": "Add your latest projects and skills",
+      "category": "profile_optimization",
+      "points": 20
+    },
+    {
+      "id": "mq-2",
+      "title": "Research 3 Companies",
+      "description": "Research and add 3 companies you'd like to work for",
+      "category": "research",
+      "points": 15
+    },
+    {
+      "id": "mq-3",
+      "title": "Customize Your Resume",
+      "description": "Tailor your resume for a specific job application",
+      "category": "application",
+      "points": 25
+    },
+    {
+      "id": "mq-4",
+      "title": "Send 5 Connection Requests",
+      "description": "Reach out to 5 professionals in your target industry",
+      "category": "networking",
+      "points": 20
+    },
+    {
+      "id": "mq-5",
+      "title": "Apply to 3 Jobs",
+      "description": "Submit applications to 3 positions",
+      "category": "application",
+      "points": 30
+    },
+    {
+      "id": "mq-6",
+      "title": "Send Follow-up Email",
+      "description": "Follow up on an application you submitted",
+      "category": "outreach",
+      "points": 15
+    },
+    {
+      "id": "mq-7",
+      "title": "Practice Interview Questions",
+      "description": "Practice answering common interview questions",
+      "category": "interview_prep",
+      "points": 20
+    },
+    {
+      "id": "mq-8",
+      "title": "Complete Skills Assessment",
+      "description": "Take an online assessment to strengthen your skills",
+      "category": "skill_building",
+      "points": 25
+    },
+    {
+      "id": "mq-9",
+      "title": "Schedule Coffee Chat",
+      "description": "Set up an informational interview",
+      "category": "networking",
+      "points": 30
+    },
+    {
+      "id": "mq-10",
+      "title": "Write Cover Letter",
+      "description": "Craft a compelling cover letter",
+      "category": "application",
+      "points": 20
+    },
+    {
+      "id": "mq-11",
+      "title": "Update Portfolio",
+      "description": "Add your latest projects to your portfolio",
+      "category": "profile_optimization",
+      "points": 25
+    },
+    {
+      "id": "mq-12",
+      "title": "Join Industry Community",
+      "description": "Join and engage in an online community",
+      "category": "networking",
+      "points": 15
+    },
+    {
+      "id": "mq-13",
+      "title": "Attend Virtual Event",
+      "description": "Attend a webinar or virtual networking event",
+      "category": "networking",
+      "points": 20
+    },
+    {
+      "id": "mq-14",
+      "title": "Request Recommendation",
+      "description": "Ask for a LinkedIn recommendation",
+      "category": "profile_optimization",
+      "points": 25
+    },
+    {
+      "id": "mq-15",
+      "title": "Complete Weekly Goals",
+      "description": "Achieve both your application and outreach goals",
+      "category": "goals",
+      "points": 50
+    }
+  ]
+}

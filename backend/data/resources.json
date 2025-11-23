@@ -1,0 +1,94 @@
+{
+  "resources": [
+    {
+      "id": "res-1",
+      "title": "Resume Writing Guide",
+      "description": "Comprehensive guide to writing an ATS-friendly resume",
+      "category": "resume",
+      "type": "article",
+      "url": "https://example.com/resume-guide",
+      "provider": "JobBuddy"
+    },
+    {
+      "id": "res-2",
+      "title": "LinkedIn Optimization Checklist",
+      "description": "Step-by-step checklist to optimize your LinkedIn profile",
+      "category": "linkedin",
+      "type": "checklist",
+      "url": "https://example.com/linkedin-checklist",
+      "provider": "JobBuddy"
+    },
+    {
+      "id": "res-3",
+      "title": "Interview Preparation Course",
+      "description": "Free course covering common interview questions",
+      "category": "interview",
+      "type": "course",
+      "url": "https://www.coursera.org/interview-prep",
+      "provider": "Coursera"
+    },
+    {
+      "id": "res-4",
+      "title": "Salary Negotiation Guide",
+      "description": "Learn how to confidently negotiate your salary",
+      "category": "negotiation",
+      "type": "article",
+      "url": "https://example.com/salary-negotiation",
+      "provider": "JobBuddy"
+    },
+    {
+      "id": "res-5",
+      "title": "Networking for Introverts",
+      "description": "Practical strategies for networking",
+      "category": "networking",
+      "type": "video",
+      "url": "https://www.youtube.com/watch?v=networking",
+      "provider": "YouTube"
+    },
+    {
+      "id": "res-6",
+      "title": "Cover Letter Templates",
+      "description": "Professional cover letter templates",
+      "category": "resume",
+      "type": "template",
+      "url": "https://example.com/cover-letter-templates",
+      "provider": "JobBuddy"
+    },
+    {
+      "id": "res-7",
+      "title": "Tech Interview Practice",
+      "description": "Platform for practicing coding interviews",
+      "category": "interview",
+      "type": "tool",
+      "url": "https://leetcode.com",
+      "provider": "LeetCode"
+    },
+    {
+      "id": "res-8",
+      "title": "Job Search Strategies",
+      "description": "Effective strategies for finding and applying to jobs",
+      "category": "strategy",
+      "type": "article",
+      "url": "https://example.com/job-search-strategies",
+      "provider": "JobBuddy"
+    },
+    {
+      "id": "res-9",
+      "title": "Personal Branding Guide",
+      "description": "Build a strong personal brand",
+      "category": "branding",
+      "type": "article",
+      "url": "https://example.com/personal-branding",
+      "provider": "JobBuddy"
+    },
+    {
+      "id": "res-10",
+      "title": "Remote Work Best Practices",
+      "description": "Tips for succeeding in remote work environments",
+      "category": "career",
+      "type": "article",
+      "url": "https://example.com/remote-work",
+      "provider": "JobBuddy"
+    }
+  ]
+}

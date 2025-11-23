@@ -1,0 +1,76 @@
+{
+  "coaches": [
+    {
+      "id": "coach-1",
+      "name": "Sarah Johnson",
+      "title": "Senior Career Coach",
+      "specialization": "Tech & Engineering Careers",
+      "bio": "15+ years helping engineers land roles at top tech companies. Former Google recruiter.",
+      "email": "sarah.johnson@jobbuddy.com",
+      "linkedin": "https://linkedin.com/in/sarahjohnson",
+      "availability": "Accepting new clients",
+      "hourly_rate": "$150",
+      "languages": ["English"]
+    },
+    {
+      "id": "coach-2",
+      "name": "Michael Chen",
+      "title": "Resume & LinkedIn Expert",
+      "specialization": "ATS Optimization & Personal Branding",
+      "bio": "Helped 500+ clients optimize their resumes and LinkedIn profiles.",
+      "email": "michael.chen@jobbuddy.com",
+      "linkedin": "https://linkedin.com/in/michaelchen",
+      "availability": "Accepting new clients",
+      "hourly_rate": "$120",
+      "languages": ["English", "Mandarin"]
+    },
+    {
+      "id": "coach-3",
+      "name": "Amara Okafor",
+      "title": "Interview Preparation Specialist",
+      "specialization": "Behavioral & Technical Interviews",
+      "bio": "Former Amazon interviewer. Specializes in FAANG interview preparation.",
+      "email": "amara.okafor@jobbuddy.com",
+      "linkedin": "https://linkedin.com/in/amaraokafor",
+      "availability": "Limited availability",
+      "hourly_rate": "$175",
+      "languages": ["English"]
+    },
+    {
+      "id": "coach-4",
+      "name": "David Martinez",
+      "title": "Career Transition Coach",
+      "specialization": "Career Changes & Pivots",
+      "bio": "Specializes in helping professionals transition to new industries.",
+      "email": "david.martinez@jobbuddy.com",
+      "linkedin": "https://linkedin.com/in/davidmartinez",
+      "availability": "Accepting new clients",
+      "hourly_rate": "$130",
+      "languages": ["English", "Spanish"]
+    },
+    {
+      "id": "coach-5",
+      "name": "Priya Patel",
+      "title": "Executive Career Coach",
+      "specialization": "Leadership & C-Suite Positions",
+      "bio": "Former Fortune 500 executive. Specializes in senior leadership roles.",
+      "email": "priya.patel@jobbuddy.com",
+      "linkedin": "https://linkedin.com/in/priyapatel",
+      "availability": "By referral only",
+      "hourly_rate": "$250",
+      "languages": ["English", "Hindi"]
+    },
+    {
+      "id": "coach-6",
+      "name": "James Wilson",
+      "title": "Networking & Outreach Coach",
+      "specialization": "Professional Networking & LinkedIn",
+      "bio": "Built a network of 50,000+ professionals. Expert in LinkedIn strategies.",
+      "email": "james.wilson@jobbuddy.com",
+      "linkedin": "https://linkedin.com/in/jameswilson",
+      "availability": "Accepting new clients",
+      "hourly_rate": "$140",
+      "languages": ["English"]
+    }
+  ]
+}
