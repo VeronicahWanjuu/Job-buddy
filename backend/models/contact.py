@@ -1,4 +1,4 @@
-﻿"""
+"""
 Contact Model
 Handles contacts at target companies
 """

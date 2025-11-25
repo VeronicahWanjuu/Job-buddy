@@ -1,0 +1,24 @@
+{
+  "info": {
+    "name": "Block 1 - Foundation",
+    "_postman_id": "block1-foundation-collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["health"]
+        }
+      },
+      "response": []
+    }
+  ]
+}

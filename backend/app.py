@@ -1,17 +1,31 @@
-﻿import os
+import os
+import sys
+from pathlib import Path
+
+# Add project root to PYTHONPATH
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 from flask import Flask, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
 from backend.config import config_by_name
-from backend.database.db import db  # import to ensure DatabaseManager is initialized
+from backend.database.db import db
 
 load_dotenv()
+
 
 def create_app():
     """Application factory pattern"""
     env = os.getenv("FLASK_ENV", "development")
     app = Flask(__name__)
     app.config.from_object(config_by_name[env])
+    
+    # Connect database
+    db_path = app.config.get("DATABASE_URL", "jobbuddy.db")
+    
+    # Only connect if not already connected (for testing)
+    if db.connection is None:
+        db.connect(db_path)
     
     # CORS
     frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
@@ -26,9 +40,10 @@ def create_app():
     )
     
     # Ensure upload folder exists
-    os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
+    upload_folder = app.config.get("UPLOAD_FOLDER", "uploads")
+    os.makedirs(upload_folder, exist_ok=True)
     
-    # Register blueprints
+    # Register Blueprints
     from backend.routes.auth import auth_bp
     from backend.routes.onboarding import onboarding_bp
     from backend.routes.applications import applications_bp
@@ -57,7 +72,6 @@ def create_app():
     def health():
         return {"status": "healthy"}
     
-    # Error handlers
     @app.errorhandler(404)
     def not_found(error):
         return jsonify({"error": "Route not found"}), 404
@@ -68,6 +82,7 @@ def create_app():
     
     return app
 
+
 if __name__ == "__main__":
     app = create_app()
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host="0.0.0.0", port=5000)

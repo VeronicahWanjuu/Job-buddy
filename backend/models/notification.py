@@ -1,4 +1,4 @@
-﻿"""
+"""
 Notification Model
 Handles in-app and email notifications
 """

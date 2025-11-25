@@ -1,4 +1,4 @@
-﻿import os
+import os
 
 class BaseConfig:
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret")
@@ -18,7 +18,13 @@ class DevelopmentConfig(BaseConfig):
 class ProductionConfig(BaseConfig):
     DEBUG = False
 
+class TestingConfig(BaseConfig):
+    TESTING = True
+    DATABASE_URL = ":memory:"  # In-memory database for tests
+    DEBUG = True
+
 config_by_name = {
     "development": DevelopmentConfig,
     "production": ProductionConfig,
+    "testing": TestingConfig,  # ← ADD THIS LINE
 }

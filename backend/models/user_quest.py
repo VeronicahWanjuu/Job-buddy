@@ -1,4 +1,4 @@
-﻿"""
+"""
 User Quest Model
 Handles completed micro-quests for gamification
 """

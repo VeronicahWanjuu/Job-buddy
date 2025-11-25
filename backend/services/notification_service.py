@@ -1,10 +1,10 @@
-﻿"""
+"""
 Notification Service
 
 Helper functions for creating notifications using DatabaseManager
 """
 from datetime import datetime, timedelta
-from database.db import db
+from backend.database.db import db
 
 def create_follow_up_notification(user_id: int, application_id: int, days_ahead: int = 7):
     """
@@ -70,7 +70,7 @@ def create_motivation_notification(user_id: int, message: str):
         (
             user_id,
             "motivation",
-            "Stay Strong! 💪",
+            "Stay Strong! ??",
             message,
             None,
             None,
@@ -98,7 +98,7 @@ def create_quest_completion_notification(user_id: int, quest_title: str, points:
         (
             user_id,
             "system",
-            "Quest Completed! 🎉",
+            "Quest Completed! ??",
             f"You completed '{quest_title}' and earned {points} points!",
             "micro_quest",
             None,

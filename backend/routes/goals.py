@@ -15,16 +15,16 @@ def get_streak_level(total_points: int) -> tuple:
     Get streak level and next milestone based on total points
     
     Returns:
-        (level_name, next_milestone)
+        (level_number, level_name, next_milestone)
     """
     if total_points < 100:
-        return "Getting Started", 100
+        return 1, "Getting Started", 100
     elif total_points < 300:
-        return "Momentum Builder", 300
+        return 2, "Momentum Builder", 300
     elif total_points < 600:
-        return "Consistent Achiever", 600
+        return 3, "Consistent Achiever", 600
     else:
-        return "Job Hunt Pro", None
+        return 4, "Job Hunt Pro", None
 
 
 @goals_bp.route('/current', methods=['GET'])
@@ -103,11 +103,11 @@ def get_current_goal():
         return jsonify({"error": str(e)}), 500
 
 
-@goals_bp.route('/update', methods=['PUT'])
+@goals_bp.route('/update', methods=['POST'])
 @require_auth
 def update_goals():
     """
-    PUT /api/v1/goals/update
+    POST /api/v1/goals/update
     
     Update weekly goals (protected)
     
@@ -200,7 +200,8 @@ def get_streak():
             "longest_streak": 12,
             "last_activity_date": "2025-01-15",
             "total_points": 450,
-            "level": "Consistent Achiever",
+            "level": 3,
+            "level_name": "Consistent Achiever",
             "next_milestone": 600
         }
     """
@@ -215,14 +216,15 @@ def get_streak():
             return jsonify({"error": "Streak not found"}), 404
         
         # Calculate level and next milestone
-        level, next_milestone = get_streak_level(streak['total_points'])
+        level_number, level_name, next_milestone = get_streak_level(streak['total_points'])
         
         return jsonify({
             "current_streak": streak['current_streak'],
             "longest_streak": streak['longest_streak'],
             "last_activity_date": streak['last_activity_date'],
             "total_points": streak['total_points'],
-            "level": level,
+            "level": level_number,
+            "level_name": level_name,
             "next_milestone": next_milestone
         }), 200
         

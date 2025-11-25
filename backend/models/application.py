@@ -1,4 +1,4 @@
-﻿"""
+"""
 Application Model
 Handles job applications and their lifecycle
 """

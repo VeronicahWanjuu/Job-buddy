@@ -1,4 +1,4 @@
-﻿"""
+"""
 Goal Model
 Handles weekly application and outreach goals
 """

@@ -1,0 +1,104 @@
+{
+  "info": {
+    "name": "Block 2 - Authentication",
+    "_postman_id": "block2-authentication-collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Register New User",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"SecurePass123!\",\n  \"name\": \"John Doe\"\n}"
+        },
+        "url": "http://localhost:5000/api/v1/auth/register"
+      }
+    },
+    {
+      "name": "Register Invalid Email",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"invalid-email\",\n  \"password\": \"SecurePass123!\",\n  \"name\": \"Test User\"\n}"
+        },
+        "url": "http://localhost:5000/api/v1/auth/register"
+      }
+    },
+    {
+      "name": "Register Weak Password",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"weak\",\n  \"name\": \"Test User\"\n}"
+        },
+        "url": "http://localhost:5000/api/v1/auth/register"
+      }
+    },
+    {
+      "name": "Login Valid User",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"SecurePass123!\"\n}"
+        },
+        "url": "http://localhost:5000/api/v1/auth/login"
+      }
+    },
+    {
+      "name": "Login Invalid Password",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"WrongPassword123!\"\n}"
+        },
+        "url": "http://localhost:5000/api/v1/auth/login"
+      }
+    },
+    {
+      "name": "Get Profile",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer <YOUR_TOKEN>" }
+        ],
+        "url": "http://localhost:5000/api/v1/auth/profile"
+      }
+    },
+    {
+      "name": "Update Profile",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Authorization", "value": "Bearer <YOUR_TOKEN>" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"John Updated Doe\",\n  \"email_notifications_enabled\": true\n}"
+        },
+        "url": "http://localhost:5000/api/v1/auth/profile"
+      }
+    },
+    {
+      "name": "Delete Profile",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          { "key": "Authorization", "value": "Bearer <YOUR_TOKEN>" }
+        ],
+        "url": "http://localhost:5000/api/v1/auth/profile"
+      }
+    }
+  ]
+}

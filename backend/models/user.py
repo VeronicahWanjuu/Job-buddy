@@ -1,4 +1,4 @@
-﻿"""
+"""
 User Model
 Handles user authentication, profile management, and relationships
 """

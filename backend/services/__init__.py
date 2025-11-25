@@ -1,4 +1,4 @@
-﻿from .streak_service import update_user_streak
+from .streak_service import update_user_streak
 from .notification_service import (
     create_follow_up_notification,
     create_motivation_notification,

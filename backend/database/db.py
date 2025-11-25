@@ -1,128 +1,143 @@
-"""
-Database Connection Manager
-Provides clean API for database operations with error handling
-"""
-
 import sqlite3
-from contextlib import contextmanager
 import json
-from typing import List, Dict, Any, Optional
-from datetime import datetime
+from contextlib import contextmanager
+from pathlib import Path
+
+
+class DatabaseError(Exception):
+    """Custom exception for database operations"""
+    pass
+
+
+def json_encode(obj):
+    """Encode Python object to JSON string"""
+    try:
+        return json.dumps(obj)
+    except (TypeError, ValueError) as e:
+        raise DatabaseError(f"JSON encoding failed: {str(e)}")
+
+
+def json_decode(json_str):
+    """Decode JSON string to Python object"""
+    if json_str is None:
+        return None
+    try:
+        return json.loads(json_str)
+    except (TypeError, ValueError) as e:
+        raise DatabaseError(f"JSON decoding failed: {str(e)}")
+
 
 class DatabaseManager:
-    """Singleton database manager"""
-    
     _instance = None
-    _db_path = 'jobbuddy.db'
+    _db_path = None
     
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super(DatabaseManager, cls).__new__(cls)
-            cls._instance._initialized = False
+            cls._instance.connection = None
         return cls._instance
     
-    def __init__(self):
-        if self._initialized:
-            return
-        self._initialized = True
-        self.connection = None
-    
-    def connect(self, db_path: str = None):
-        """Connect to database"""
-        if db_path:
-            self._db_path = db_path
+    def connect(self, db_path):
+        """Connect to a database file and create schema if empty"""
+        self._db_path = db_path
+        self.connection = sqlite3.connect(
+            db_path,
+            check_same_thread=False,
+            timeout=10
+        )
+        self.connection.row_factory = sqlite3.Row
+        self.connection.execute("PRAGMA foreign_keys = ON")
         
-        try:
-            self.connection = sqlite3.connect(
-                self._db_path,
-                check_same_thread=False,  # Allow multi-threading
-                timeout=10.0  # Wait up to 10 seconds for locks
-            )
-            self.connection.row_factory = sqlite3.Row
-            self.connection.execute('PRAGMA foreign_keys = ON')
-            return True
-        except sqlite3.Error as e:
-            print(f"Database connection error: {e}")
-            return False
+        # Auto-load schema if DB empty
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT COUNT(*) AS c FROM sqlite_master WHERE type='table'")
+        row = cursor.fetchone()
+        count = row[0] if row else 0
+        cursor.close()
+        
+        if count == 0:
+            schema_path = Path(__file__).parent / "schema.sql"
+            if schema_path.exists():
+                with open(schema_path, "r", encoding="utf-8") as f:
+                    self.connection.executescript(f.read())
+                self.connection.commit()
     
     def close(self):
-        """Close database connection"""
         if self.connection:
             self.connection.close()
             self.connection = None
     
-    @contextmanager
-    def get_cursor(self):
-        """Context manager for database cursor"""
-        if not self.connection:
-            self.connect()
-        
-        cursor = self.connection.cursor()
-        try:
-            yield cursor
+    def commit(self):
+        if self.connection:
             self.connection.commit()
-        except sqlite3.Error as e:
+    
+    def rollback(self):
+        """Rollback current transaction"""
+        if self.connection:
             self.connection.rollback()
-            raise DatabaseError(f"Database operation failed: {e}")
-        finally:
-            cursor.close()
     
-    def execute_query(self, query: str, params: tuple = ()) -> List[Dict]:
-        """Execute SELECT query and return results as list of dicts"""
-        with self.get_cursor() as cursor:
-            cursor.execute(query, params)
-            rows = cursor.fetchall()
-            return [dict(row) for row in rows]
+    def run_schema(self, schema_path):
+        """Load schema from file path"""
+        with open(schema_path, "r", encoding="utf-8") as f:
+            self.connection.executescript(f.read())
+        self.connection.commit()
     
-    def execute_one(self, query: str, params: tuple = ()) -> Optional[Dict]:
-        """Execute SELECT query and return single result"""
-        results = self.execute_query(query, params)
-        return results[0] if results else None
+    # -------------------------
+    # QUERY METHODS
+    # -------------------------
+    def execute(self, query, params=()):
+        """Execute a query and return cursor"""
+        cursor = self.connection.cursor()
+        cursor.execute(query, params)
+        return cursor
     
-    def execute_insert(self, query: str, params: tuple = ()) -> int:
-        """Execute INSERT query and return lastrowid"""
-        with self.get_cursor() as cursor:
-            cursor.execute(query, params)
-            return cursor.lastrowid
+    def query_one(self, query, params=()):
+        """Execute query and return single row as dict"""
+        cursor = self.connection.cursor()
+        cursor.execute(query, params)
+        row = cursor.fetchone()
+        cursor.close()
+        return dict(row) if row else None
     
-    def execute_update(self, query: str, params: tuple = ()) -> int:
-        """Execute UPDATE query and return affected rows"""
-        with self.get_cursor() as cursor:
-            cursor.execute(query, params)
-            return cursor.rowcount
+    def query(self, query, params=()):
+        """Execute query and return all rows as list of dicts"""
+        cursor = self.connection.cursor()
+        cursor.execute(query, params)
+        rows = cursor.fetchall()
+        cursor.close()
+        return [dict(r) for r in rows]
     
-    def execute_delete(self, query: str, params: tuple = ()) -> int:
-        """Execute DELETE query and return affected rows"""
-        with self.get_cursor() as cursor:
-            cursor.execute(query, params)
-            return cursor.rowcount
+    def query_all(self, query, params=()):
+        """Alias for query()"""
+        return self.query(query, params)
     
-    @contextmanager
-    def transaction(self):
-        """Context manager for transactions"""
-        with self.get_cursor() as cursor:
-            try:
-                yield cursor
-            except Exception as e:
-                self.connection.rollback()
-                raise DatabaseError(f"Transaction failed: {e}")
+    def execute_insert(self, query, params=()):
+        """Execute INSERT and return last row id"""
+        cursor = self.connection.cursor()
+        cursor.execute(query, params)
+        self.connection.commit()
+        last_id = cursor.lastrowid
+        cursor.close()
+        return last_id
+    
+    def execute_update(self, query, params=()):
+        """Execute UPDATE and return number of affected rows"""
+        cursor = self.connection.cursor()
+        cursor.execute(query, params)
+        self.connection.commit()
+        row_count = cursor.rowcount
+        cursor.close()
+        return row_count
+    
+    def execute_delete(self, query, params=()):
+        """Execute DELETE and return number of affected rows"""
+        cursor = self.connection.cursor()
+        cursor.execute(query, params)
+        self.connection.commit()
+        row_count = cursor.rowcount
+        cursor.close()
+        return row_count
 
-# Helper functions for JSON fields
-def json_encode(data: Any) -> str:
-    """Encode data as JSON string"""
-    return json.dumps(data) if data else None
 
-def json_decode(json_str: str) -> Any:
-    """Decode JSON string to Python object"""
-    try:
-        return json.loads(json_str) if json_str else None
-    except json.JSONDecodeError:
-        return None
-
-# Custom exception
-class DatabaseError(Exception):
-    """Custom database exception"""
-    pass
-
-# Singleton instance
+# Global singleton instance
 db = DatabaseManager()

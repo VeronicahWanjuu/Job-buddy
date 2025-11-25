@@ -1,4 +1,4 @@
-﻿"""
+"""
 Streak Model
 Handles user activity streaks and gamification points
 """

@@ -1,4 +1,4 @@
-﻿"""
+"""
 Company Model
 Handles target companies for job applications and outreach
 """

@@ -1,10 +1,10 @@
-﻿"""
+"""
 Streak Service
 
 Handles streak calculations and updates using DatabaseManager (raw SQL)
 """
 from datetime import date, timedelta
-from database.db import db
+from backend.database.db import db
 
 def update_user_streak(user_id: int, points: int = 10) -> dict:
     """
