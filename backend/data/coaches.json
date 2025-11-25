@@ -10,7 +10,8 @@
       "linkedin": "https://linkedin.com/in/sarahjohnson",
       "availability": "Accepting new clients",
       "hourly_rate": "$150",
-      "languages": ["English"]
+      "languages": ["English"],
+      "image_url": "https://placeholder.coach-images.com/sarah-johnson.jpg"
     },
     {
       "id": "coach-2",
@@ -22,7 +23,8 @@
       "linkedin": "https://linkedin.com/in/michaelchen",
       "availability": "Accepting new clients",
       "hourly_rate": "$120",
-      "languages": ["English", "Mandarin"]
+      "languages": ["English", "Mandarin"],
+      "image_url": "https://placeholder.coach-images.com/michael-chen.jpg"
     },
     {
       "id": "coach-3",
@@ -34,7 +36,8 @@
       "linkedin": "https://linkedin.com/in/amaraokafor",
       "availability": "Limited availability",
       "hourly_rate": "$175",
-      "languages": ["English"]
+      "languages": ["English"],
+      "image_url": "https://placeholder.coach-images.com/amara-okafor.jpg"
     },
     {
       "id": "coach-4",
@@ -46,7 +49,8 @@
       "linkedin": "https://linkedin.com/in/davidmartinez",
       "availability": "Accepting new clients",
       "hourly_rate": "$130",
-      "languages": ["English", "Spanish"]
+      "languages": ["English", "Spanish"],
+      "image_url": "https://placeholder.coach-images.com/david-martinez.jpg"
     },
     {
       "id": "coach-5",
@@ -58,7 +62,8 @@
       "linkedin": "https://linkedin.com/in/priyapatel",
       "availability": "By referral only",
       "hourly_rate": "$250",
-      "languages": ["English", "Hindi"]
+      "languages": ["English", "Hindi"],
+      "image_url": "https://placeholder.coach-images.com/priya-patel.jpg"
     },
     {
       "id": "coach-6",
@@ -70,7 +75,8 @@
       "linkedin": "https://linkedin.com/in/jameswilson",
       "availability": "Accepting new clients",
       "hourly_rate": "$140",
-      "languages": ["English"]
+      "languages": ["English"],
+      "image_url": "https://placeholder.coach-images.com/james-wilson.jpg"
     }
   ]
 }

@@ -1,15 +1,16 @@
-﻿"""
-Configuration classes for Flask app
-"""
-import os
+﻿import os
 
 class BaseConfig:
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret")
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "dev-jwt-secret")
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite:///jobbuddy.db")
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", "uploads/cvs")
+    
+    # Database URL/path used by backend/database/db.py
+    DATABASE_URL = os.getenv("DATABASE_URL", "backend/test_models.db")
+    
+    UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", "backend/uploads/cvs")
     MAX_CONTENT_LENGTH = int(os.getenv("MAX_FILE_SIZE_MB", "5")) * 1024 * 1024
+    
+    ATS_SCORE_THRESHOLD = int(os.getenv("ATS_SCORE_THRESHOLD", "60"))
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True

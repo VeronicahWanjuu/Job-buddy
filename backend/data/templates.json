@@ -1,64 +1,44 @@
 {
   "templates": [
     {
-      "id": "initial_application",
-      "type": "email",
-      "name": "Initial Application Follow-up",
-      "subject": "Following up on {job_title} Application",
-      "body": "Hi {contact_name},\n\nI hope this email finds you well. I recently applied for the {job_title} position at {company_name} and wanted to reach out to express my continued interest.\n\nWith my background in software development, I believe I would be a strong fit for your team. I'm particularly excited about {company_name}'s mission.\n\nI'd love the opportunity to discuss how I can contribute to {company_name}'s success.\n\nBest regards,\n{user_name}",
-      "editing_tips": [
-        "Personalize with specific skills relevant to the role",
-        "Mention something specific about the company",
-        "Keep it concise and professional"
-      ]
+      "id": "cold_outreach",
+      "type": "cold_outreach",
+      "name": "Cold Outreach to Recruiter",
+      "subject": "Exploring Opportunities at {company_name}",
+      "body": "Hi {contact_name},\n\nI hope this message finds you well. My name is {user_name}, and I'm actively exploring opportunities in the tech industry.\n\nI've been following {company_name}'s work, particularly your recent initiatives in {industry}, and I'm impressed by your company's impact. With my background in software development and my goal of {dream_milestone}, I believe I could contribute meaningfully to your team.\n\nI've attached my resume for your review and would love to schedule a brief call to discuss potential opportunities that align with my skills and your team's needs.\n\nThank you for considering my application. I look forward to hearing from you.\n\nBest regards,\n{user_name}",
+      "editing_tips": "Personalize this template by researching the company's recent projects or news. Mention specific technologies or initiatives that align with your skills."
     },
     {
-      "id": "networking_linkedin",
-      "type": "linkedin",
-      "name": "LinkedIn Networking Message",
-      "subject": null,
-      "body": "Hi {contact_name},\n\nI came across your profile while researching {company_name} and was impressed by your work in {contact_role}.\n\nI'm currently seeking opportunities and would love to learn more about your experience at {company_name}. Would you be open to a brief conversation?\n\nThank you for considering my request!\n\nBest,\n{user_name}",
-      "editing_tips": [
-        "Be respectful of their time",
-        "Show genuine interest in their work",
-        "Don't immediately ask for a job"
-      ]
+      "id": "follow_up_application",
+      "type": "follow_up_application",
+      "name": "Follow-up After Application",
+      "subject": "Following Up on {job_title} Application",
+      "body": "Hi {contact_name},\n\nI wanted to follow up on my application for the {job_title} position at {company_name}, which I submitted on {applied_date}.\n\nI remain very interested in this opportunity and believe my skills in software development would be a great fit for your team. I'm particularly excited about the possibility of contributing to {company_name}'s mission.\n\nIf there's any additional information I can provide or if you'd like to schedule a conversation, I'm happy to make myself available at your convenience.\n\nThank you for your time and consideration.\n\nBest regards,\n{user_name}",
+      "editing_tips": "Send this 7-10 days after applying. Reference specific aspects of the job description that excited you."
+    },
+    {
+      "id": "networking_connection",
+      "type": "networking_connection",
+      "name": "LinkedIn Connection Request",
+      "subject": "Connecting - Fellow Tech Professional",
+      "body": "Hi {contact_name},\n\nI came across your profile and noticed we share an interest in {industry}. I'm currently on a journey toward {dream_milestone} and would love to connect with professionals like you who are making an impact at {company_name}.\n\nI'd be grateful for the opportunity to learn from your experience and insights in the field.\n\nLooking forward to connecting!\n\nBest,\n{user_name}",
+      "editing_tips": "Keep LinkedIn messages brief. Mention a mutual connection or shared interest if possible."
     },
     {
       "id": "thank_you_interview",
-      "type": "email",
-      "name": "Post-Interview Thank You",
-      "subject": "Thank you for the {job_title} interview",
-      "body": "Dear {contact_name},\n\nThank you for taking the time to speak with me about the {job_title} position at {company_name}. I enjoyed learning more about the role and the team.\n\nOur conversation reinforced my enthusiasm for this opportunity.\n\nPlease let me know if you need any additional information from me. I look forward to hearing from you.\n\nBest regards,\n{user_name}",
-      "editing_tips": [
-        "Send within 24 hours of the interview",
-        "Reference specific topics discussed",
-        "Reiterate your interest"
-      ]
+      "type": "thank_you_interview",
+      "name": "Thank You After Interview",
+      "subject": "Thank You - {job_title} Interview",
+      "body": "Dear {contact_name},\n\nThank you for taking the time to meet with me today to discuss the {job_title} position at {company_name}. I enjoyed learning more about the team's projects and the company's vision.\n\nOur conversation reinforced my enthusiasm for this opportunity. I'm particularly excited about [specific project or aspect discussed], and I'm confident that my skills and experience would allow me to contribute effectively to your team.\n\nPlease don't hesitate to reach out if you need any additional information from me. I look forward to hearing about the next steps in the process.\n\nThank you again for your time and consideration.\n\nBest regards,\n{user_name}",
+      "editing_tips": "Send within 24 hours of your interview. Reference specific topics you discussed to show engagement."
     },
     {
-      "id": "cold_outreach",
-      "type": "email",
-      "name": "Cold Outreach to Hiring Manager",
-      "subject": "Inquiry about opportunities at {company_name}",
-      "body": "Hi {contact_name},\n\nI hope this message finds you well. My name is {user_name}, and I'm interested in opportunities at {company_name}.\n\nI've been following {company_name}'s work and am impressed by your innovation. My dream is to {dream_milestone}, and I believe {company_name} would be the perfect place to achieve this.\n\nWould you be open to a brief conversation about how I might contribute to your team?\n\nThank you for your time!\n\nBest,\n{user_name}",
-      "editing_tips": [
-        "Research the company thoroughly",
-        "Show genuine interest in their mission",
-        "Be clear about what you're looking for"
-      ]
-    },
-    {
-      "id": "referral_request",
-      "type": "email",
-      "name": "Referral Request from Connection",
-      "subject": "Referral request for {job_title} at {company_name}",
-      "body": "Hi {contact_name},\n\nI hope you're doing well! I wanted to reach out because I noticed that {company_name} has an opening for {job_title}, and I'm very interested in applying.\n\nGiven your experience at {company_name}, I was wondering if you might be willing to refer me or provide insights about the role and team.\n\nI'd be grateful for any guidance you can provide!\n\nThank you so much for considering my request.\n\nBest,\n{user_name}",
-      "editing_tips": [
-        "Only reach out to people you actually know",
-        "Make it easy for them to help you",
-        "Attach your resume"
-      ]
+      "id": "informational_interview",
+      "type": "informational_interview",
+      "name": "Request for Informational Interview",
+      "subject": "Coffee Chat Request - Aspiring {job_title}",
+      "body": "Hi {contact_name},\n\nI hope this message finds you well. My name is {user_name}, and I'm working toward {dream_milestone}.\n\nI've been following your career at {company_name} and would love to learn from your experience in {industry}. Would you be open to a brief 20-minute coffee chat (virtual or in-person) where I could ask you a few questions about your journey and seek your advice?\n\nI understand you're busy, so I'm happy to work around your schedule. Thank you for considering my request.\n\nBest regards,\n{user_name}",
+      "editing_tips": "Make it easy for them to say yes by being specific about the time commitment (15-20 minutes). Show genuine interest in their work."
     }
   ]
 }

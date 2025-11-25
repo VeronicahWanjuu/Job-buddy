@@ -3,92 +3,92 @@
     {
       "id": "res-1",
       "title": "Resume Writing Guide",
-      "description": "Comprehensive guide to writing an ATS-friendly resume",
+      "description": "Comprehensive guide to writing an ATS-friendly resume that gets you noticed.",
       "category": "resume",
       "type": "article",
-      "url": "https://example.com/resume-guide",
-      "provider": "JobBuddy"
+      "url": "https://www.indeed.com/career-advice/resumes-cover-letters/how-to-make-a-resume",
+      "difficulty": "beginner"
     },
     {
       "id": "res-2",
-      "title": "LinkedIn Optimization Checklist",
-      "description": "Step-by-step checklist to optimize your LinkedIn profile",
-      "category": "linkedin",
-      "type": "checklist",
-      "url": "https://example.com/linkedin-checklist",
-      "provider": "JobBuddy"
+      "title": "LeetCode - Coding Interview Practice",
+      "description": "Practice coding problems to prepare for technical interviews at top tech companies.",
+      "category": "interview_prep",
+      "type": "tool",
+      "url": "https://leetcode.com/",
+      "difficulty": "intermediate"
     },
     {
       "id": "res-3",
-      "title": "Interview Preparation Course",
-      "description": "Free course covering common interview questions",
-      "category": "interview",
-      "type": "course",
-      "url": "https://www.coursera.org/interview-prep",
-      "provider": "Coursera"
+      "title": "LinkedIn Profile Optimization",
+      "description": "Step-by-step guide to building a LinkedIn profile that attracts recruiters.",
+      "category": "networking",
+      "type": "article",
+      "url": "https://www.linkedin.com/help/linkedin/answer/a519819",
+      "difficulty": "beginner"
     },
     {
       "id": "res-4",
-      "title": "Salary Negotiation Guide",
-      "description": "Learn how to confidently negotiate your salary",
-      "category": "negotiation",
+      "title": "Behavioral Interview Questions Guide",
+      "description": "Common behavioral interview questions and how to answer them using the STAR method.",
+      "category": "interview_prep",
       "type": "article",
-      "url": "https://example.com/salary-negotiation",
-      "provider": "JobBuddy"
+      "url": "https://www.themuse.com/advice/behavioral-interview-questions-answers-examples",
+      "difficulty": "intermediate"
     },
     {
       "id": "res-5",
-      "title": "Networking for Introverts",
-      "description": "Practical strategies for networking",
-      "category": "networking",
-      "type": "video",
-      "url": "https://www.youtube.com/watch?v=networking",
-      "provider": "YouTube"
+      "title": "Glassdoor Company Reviews",
+      "description": "Research company culture, salaries, and interview processes before applying.",
+      "category": "research",
+      "type": "tool",
+      "url": "https://www.glassdoor.com/",
+      "difficulty": "beginner"
     },
     {
       "id": "res-6",
-      "title": "Cover Letter Templates",
-      "description": "Professional cover letter templates",
-      "category": "resume",
-      "type": "template",
-      "url": "https://example.com/cover-letter-templates",
-      "provider": "JobBuddy"
+      "title": "Salary Negotiation Guide",
+      "description": "Learn how to negotiate your job offer and maximize your compensation package.",
+      "category": "career",
+      "type": "article",
+      "url": "https://www.levels.fyi/blog/negotiation-guide.html",
+      "difficulty": "advanced"
     },
     {
       "id": "res-7",
-      "title": "Tech Interview Practice",
-      "description": "Platform for practicing coding interviews",
-      "category": "interview",
+      "title": "HackerRank - Technical Skills",
+      "description": "Improve your coding skills and prepare for technical assessments.",
+      "category": "interview_prep",
       "type": "tool",
-      "url": "https://leetcode.com",
-      "provider": "LeetCode"
+      "url": "https://www.hackerrank.com/",
+      "difficulty": "intermediate"
     },
     {
       "id": "res-8",
-      "title": "Job Search Strategies",
-      "description": "Effective strategies for finding and applying to jobs",
-      "category": "strategy",
-      "type": "article",
-      "url": "https://example.com/job-search-strategies",
-      "provider": "JobBuddy"
+      "title": "Cover Letter Templates",
+      "description": "Professional cover letter templates for various industries and job types.",
+      "category": "application",
+      "type": "template",
+      "url": "https://www.indeed.com/career-advice/cover-letter-samples",
+      "difficulty": "beginner"
     },
     {
       "id": "res-9",
-      "title": "Personal Branding Guide",
-      "description": "Build a strong personal brand",
-      "category": "branding",
+      "title": "GitHub Profile Guide",
+      "description": "Build an impressive GitHub profile to showcase your projects and code.",
+      "category": "portfolio",
       "type": "article",
-      "url": "https://example.com/personal-branding",
-      "provider": "JobBuddy"
+      "url": "https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile",
+      "difficulty": "intermediate"
     },
     {
       "id": "res-10",
-      "title": "Remote Work Best Practices",
-      "description": "Tips for succeeding in remote work environments",
-      "category": "career",
-      "type": "article",
-      "url": "https://example.com/remote-work",
-      "provider": "JobBuddy"
+      "title": "Networking Email Templates",
+      "description": "Effective email templates for cold outreach, follow-ups, and networking.",
+      "category": "networking",
+      "type": "template",
+      "url": "https://www.themuse.com/advice/want-to-reach-out-to-someone-on-linkedin-use-these-message-templates",
+      "difficulty": "beginner"
     }
   ]
 }

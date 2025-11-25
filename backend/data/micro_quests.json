@@ -3,107 +3,122 @@
     {
       "id": "mq-1",
       "title": "Update Your LinkedIn Profile",
-      "description": "Add your latest projects and skills",
+      "description": "Add your latest projects, skills, and a professional headline that reflects your career goals.",
       "category": "profile_optimization",
-      "points": 20
+      "points": 20,
+      "difficulty": "easy"
     },
     {
       "id": "mq-2",
-      "title": "Research 3 Companies",
-      "description": "Research and add 3 companies you'd like to work for",
-      "category": "research",
-      "points": 15
+      "title": "Tailor Your Resume for a Job",
+      "description": "Customize your resume for a specific job posting by incorporating keywords from the job description.",
+      "category": "application_prep",
+      "points": 30,
+      "difficulty": "medium"
     },
     {
       "id": "mq-3",
-      "title": "Customize Your Resume",
-      "description": "Tailor your resume for a specific job application",
-      "category": "application",
-      "points": 25
+      "title": "Send Your First Cold Outreach",
+      "description": "Reach out to a recruiter or professional at a company you're interested in. Use one of our templates to get started.",
+      "category": "networking",
+      "points": 25,
+      "difficulty": "medium"
     },
     {
       "id": "mq-4",
-      "title": "Send 5 Connection Requests",
-      "description": "Reach out to 5 professionals in your target industry",
-      "category": "networking",
-      "points": 20
+      "title": "Research 5 Target Companies",
+      "description": "Identify 5 companies you'd like to work for and add them to your company list with notes about why they interest you.",
+      "category": "research",
+      "points": 15,
+      "difficulty": "easy"
     },
     {
       "id": "mq-5",
-      "title": "Apply to 3 Jobs",
-      "description": "Submit applications to 3 positions",
-      "category": "application",
-      "points": 30
+      "title": "Practice a Technical Interview Question",
+      "description": "Solve one coding challenge or technical problem relevant to your field. Document your approach.",
+      "category": "interview_prep",
+      "points": 30,
+      "difficulty": "hard"
     },
     {
       "id": "mq-6",
-      "title": "Send Follow-up Email",
-      "description": "Follow up on an application you submitted",
-      "category": "outreach",
-      "points": 15
+      "title": "Follow Up on an Application",
+      "description": "Send a follow-up email for an application you submitted 7-10 days ago.",
+      "category": "follow_up",
+      "points": 20,
+      "difficulty": "easy"
     },
     {
       "id": "mq-7",
-      "title": "Practice Interview Questions",
-      "description": "Practice answering common interview questions",
-      "category": "interview_prep",
-      "points": 20
+      "title": "Connect with 3 People on LinkedIn",
+      "description": "Send personalized connection requests to 3 professionals in your target industry.",
+      "category": "networking",
+      "points": 15,
+      "difficulty": "easy"
     },
     {
       "id": "mq-8",
-      "title": "Complete Skills Assessment",
-      "description": "Take an online assessment to strengthen your skills",
-      "category": "skill_building",
-      "points": 25
+      "title": "Optimize Your Resume for ATS",
+      "description": "Use our CV matcher tool to analyze your resume and improve your ATS score to at least 70.",
+      "category": "application_prep",
+      "points": 35,
+      "difficulty": "hard"
     },
     {
       "id": "mq-9",
-      "title": "Schedule Coffee Chat",
-      "description": "Set up an informational interview",
-      "category": "networking",
-      "points": 30
+      "title": "Write a Cover Letter",
+      "description": "Draft a compelling cover letter for one of your target positions.",
+      "category": "application_prep",
+      "points": 25,
+      "difficulty": "medium"
     },
     {
       "id": "mq-10",
-      "title": "Write Cover Letter",
-      "description": "Craft a compelling cover letter",
-      "category": "application",
-      "points": 20
+      "title": "Set Your Weekly Goals",
+      "description": "Define realistic weekly goals for applications and outreach activities.",
+      "category": "goal_setting",
+      "points": 10,
+      "difficulty": "easy"
     },
     {
       "id": "mq-11",
-      "title": "Update Portfolio",
-      "description": "Add your latest projects to your portfolio",
-      "category": "profile_optimization",
-      "points": 25
+      "title": "Request an Informational Interview",
+      "description": "Ask someone in your network for a brief informational interview or coffee chat.",
+      "category": "networking",
+      "points": 30,
+      "difficulty": "medium"
     },
     {
       "id": "mq-12",
-      "title": "Join Industry Community",
-      "description": "Join and engage in an online community",
-      "category": "networking",
-      "points": 15
+      "title": "Build Your Elevator Pitch",
+      "description": "Write and practice a 30-second elevator pitch about who you are and what you're looking for.",
+      "category": "interview_prep",
+      "points": 20,
+      "difficulty": "medium"
     },
     {
       "id": "mq-13",
-      "title": "Attend Virtual Event",
-      "description": "Attend a webinar or virtual networking event",
-      "category": "networking",
-      "points": 20
+      "title": "Track Your Applications",
+      "description": "Log all your active applications in JobBuddy and add relevant notes and dates.",
+      "category": "organization",
+      "points": 15,
+      "difficulty": "easy"
     },
     {
       "id": "mq-14",
-      "title": "Request Recommendation",
-      "description": "Ask for a LinkedIn recommendation",
-      "category": "profile_optimization",
-      "points": 25
+      "title": "Prepare STAR Stories",
+      "description": "Write 3 STAR (Situation, Task, Action, Result) stories for behavioral interviews.",
+      "category": "interview_prep",
+      "points": 35,
+      "difficulty": "hard"
     },
     {
       "id": "mq-15",
-      "title": "Complete Weekly Goals",
-      "description": "Achieve both your application and outreach goals",
-      "category": "goals",
-      "points": 50
+      "title": "Join a Professional Community",
+      "description": "Join an online community, Slack group, or Discord server related to your industry.",
+      "category": "networking",
+      "points": 15,
+      "difficulty": "easy"
     }
   ]
 }
