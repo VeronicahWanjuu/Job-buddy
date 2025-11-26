@@ -99,6 +99,11 @@ class DatabaseManager:
         cursor.close()
         return dict(row) if row else None
     
+    # ADDED: Alias for backward compatibility with User model
+    def execute_one(self, query, params=()):
+        """Alias for query_one() - for backward compatibility"""
+        return self.query_one(query, params)
+    
     def query(self, query, params=()):
         """Execute query and return all rows as list of dicts"""
         cursor = self.connection.cursor()
@@ -109,6 +114,11 @@ class DatabaseManager:
     
     def query_all(self, query, params=()):
         """Alias for query()"""
+        return self.query(query, params)
+    
+    # ADDED: Alias for backward compatibility
+    def execute_query(self, query, params=()):
+        """Alias for query() - for backward compatibility"""
         return self.query(query, params)
     
     def execute_insert(self, query, params=()):
@@ -137,6 +147,20 @@ class DatabaseManager:
         row_count = cursor.rowcount
         cursor.close()
         return row_count
+    
+    # ADDED: Transaction context manager
+    @contextmanager
+    def transaction(self):
+        """Context manager for transactions"""
+        cursor = self.connection.cursor()
+        try:
+            yield cursor
+            self.connection.commit()
+        except Exception:
+            self.connection.rollback()
+            raise
+        finally:
+            cursor.close()
 
 
 # Global singleton instance

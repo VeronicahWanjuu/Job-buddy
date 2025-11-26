@@ -2,7 +2,6 @@
 Test Block 1: Backend Foundation
 Tests config, utilities, services, and app initialization
 """
-
 import pytest
 import sys
 from pathlib import Path
@@ -62,13 +61,13 @@ class TestBlock1Foundation:
             assert len(token) > 50
         print("✅ JWT token generation working")
     
-    def test_database_connection(self):
-        """Test database connection"""
-        assert db is not None
-        # Test simple query
-        result = db.query("SELECT 1 as test")
-        assert len(result) == 1
-        assert result[0]['test'] == 1
+    def test_database_connection(self, app):
+        """Test database connection - FIXED"""
+        with app.app_context():
+            # Database should already be connected by the app fixture
+            result = db.execute_one("SELECT 1 as test")
+            assert result is not None
+            assert result['test'] == 1
         print("✅ Database connection successful")
     
     def test_app_initialization(self):

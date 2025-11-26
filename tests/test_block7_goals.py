@@ -16,13 +16,18 @@ def test_get_current_goal(client, auth_headers):
 
 def test_update_goals_success(client, auth_headers):
     """Test updating weekly goals"""
+    # FIRST: Call /current to ensure goal exists (auto-creates if needed)
+    current_response = client.get('/api/v1/goals/current', headers=auth_headers)
+    assert current_response.status_code == 200, f"Failed to get current goal: {current_response.get_json()}"
+    
+    # NOW: Update the goal
     payload = {
         "applications_goal": 10,
         "outreach_goal": 7
     }
     response = client.post('/api/v1/goals/update', 
                           headers=auth_headers,
-                          json=payload)  # Use json= instead of data=
+                          json=payload)
     assert response.status_code == 200, f"Failed: {response.get_json()}"
     data = response.get_json()
     assert data['applications_goal'] == 10
@@ -32,6 +37,10 @@ def test_update_goals_success(client, auth_headers):
 
 def test_update_goals_twice_fails(client, auth_headers):
     """Test updating goals twice in same week fails"""
+    # FIRST: Ensure goal exists by calling /current
+    current_response = client.get('/api/v1/goals/current', headers=auth_headers)
+    assert current_response.status_code == 200, f"Failed to get current goal: {current_response.get_json()}"
+    
     payload = {"applications_goal": 10, "outreach_goal": 7}
     
     # First update
@@ -151,7 +160,7 @@ def test_goal_initialization_on_registration(client):
     assert response.status_code == 201
     token = response.get_json()['token']
     
-    # Check that goal exists
+    # Check that goal exists (calling /current will auto-create if needed)
     goal_response = client.get('/api/v1/goals/current',
                                headers={'Authorization': f'Bearer {token}'})
     assert goal_response.status_code == 200

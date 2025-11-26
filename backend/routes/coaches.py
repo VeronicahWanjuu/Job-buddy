@@ -38,13 +38,12 @@ def get_coaches():
         return jsonify({"error": str(e)}), 500
 
 
-
 @coaches_bp.route('/<coach_id>', methods=['GET'])
 @require_auth
 def get_coach(coach_id):
     """
     GET /api/v1/coaches/<coach_id>
-    Returns a single coach’s full profile.
+    Returns a single coach's full profile.
     """
     try:
         coaches = load_coaches()
@@ -64,13 +63,12 @@ def get_coach(coach_id):
         return jsonify({"error": str(e)}), 500
 
 
-
 @coaches_bp.route('/tip-of-the-day', methods=['GET'])
 @require_auth
 def get_tip_of_the_day():
     """
     GET /api/v1/coaches/tip-of-the-day
-    Returns a random TIP based on coach’s specialization.
+    Returns a random TIP based on coach's specialization.
     """
     try:
         coaches = load_coaches()
@@ -89,34 +87,48 @@ def get_tip_of_the_day():
         specialization_tips = {
             "Tech & Engineering Careers": [
                 "Keep your GitHub active with recent projects.",
-                "Master data structures—FAANG loves them."
+                "Master data structures—FAANG loves them.",
+                "Contribute to open source—it's a resume booster.",
+                "Learn system design for senior roles."
             ],
             "ATS Optimization & Personal Branding": [
                 "Use keywords from the job description in your resume.",
-                "Strong LinkedIn headlines increase recruiter visibility."
+                "Strong LinkedIn headlines increase recruiter visibility.",
+                "Keep your resume to 1-2 pages max.",
+                "Quantify achievements with numbers and metrics."
             ],
             "Behavioral & Technical Interviews": [
                 "Use the STAR method in your interview answers.",
-                "Mock interviews significantly improve performance."
+                "Mock interviews significantly improve performance.",
+                "Research the company culture before interviewing.",
+                "Prepare questions to ask the interviewer."
             ],
             "Career Changes & Pivots": [
                 "Transferable skills are more powerful than job titles.",
-                "Network before applying—referrals always win."
+                "Network before applying—referrals always win.",
+                "Consider contract work to break into new industries.",
+                "Update your LinkedIn to reflect your new direction."
             ],
             "Leadership & C-Suite Positions": [
                 "Highlight measurable impact in leadership roles.",
-                "Executive presence starts with clarity and confidence."
+                "Executive presence starts with clarity and confidence.",
+                "Build your personal brand through thought leadership.",
+                "Network at executive-level events and conferences."
             ],
             "Professional Networking & LinkedIn": [
                 "Send personalized connection requests to boost acceptance.",
-                "Engage on LinkedIn 10 minutes daily for visibility."
+                "Engage on LinkedIn 10 minutes daily for visibility.",
+                "Comment on posts before sending connection requests.",
+                "Share valuable content to position yourself as an expert."
             ]
         }
 
         specialization = coach.get("specialization", "")
         tips = specialization_tips.get(specialization, [
             "Stay consistent—opportunities follow persistence.",
-            "Small daily progress leads to big career wins."
+            "Small daily progress leads to big career wins.",
+            "Your network is your net worth—nurture it.",
+            "Every rejection brings you closer to acceptance."
         ])
 
         tip = random.choice(tips)

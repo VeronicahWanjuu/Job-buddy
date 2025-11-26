@@ -7,7 +7,6 @@ import pytest
 import sqlite3
 import os
 import sys
-import uuid
 from pathlib import Path
 from datetime import date, datetime, timedelta
 import json
@@ -53,9 +52,7 @@ def test_db():
 @pytest.fixture
 def sample_user(test_db):
     """Create a sample user"""
-    # Generate unique email to prevent conflicts
-    unique_email = f'test_{uuid.uuid4().hex[:8]}@example.com'
-    return User.create(unique_email, 'Password123!', 'Test User')
+    return User.create('test@example.com', 'Password123!', 'Test User')
 
 @pytest.fixture
 def sample_company(test_db, sample_user):
@@ -1693,4 +1690,3 @@ if __name__ == '__main__':
     print("\n" + "="*70)
     print("✅ ALL TESTS COMPLETED!")
     print("="*70)
-

@@ -310,7 +310,13 @@ class User:
                 UPDATE users SET password_hash = ? WHERE id = ?
             ''', (new_hash, self.id))
             
-            self.password_hash = new_hash
+            # CRITICAL FIX: Refresh password hash from database to ensure consistency
+            user_data = db.execute_one('SELECT password_hash FROM users WHERE id = ?', (self.id,))
+            if user_data:
+                self.password_hash = user_data['password_hash']
+            else:
+                self.password_hash = new_hash
+            
             return True
         except DatabaseError:
             return False

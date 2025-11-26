@@ -71,8 +71,8 @@ def get_current_goal():
                 """
                 INSERT INTO goals
                 (user_id, week_start, applications_goal, applications_current,
-                 outreach_goal, outreach_current, created_at)
-                VALUES (?, ?, 5, 0, 3, 0, date('now'))
+                 outreach_goal, outreach_current, created_at, updated_at)
+                VALUES (?, ?, 5, 0, 3, 0, date('now'), NULL)
                 """,
                 (request.user_id, week_start.isoformat())
             )
@@ -153,8 +153,10 @@ def update_goals():
         
         # Check if already updated this week
         if goal['updated_at']:
-            # Parse updated_at date
-            updated_date = date.fromisoformat(goal['updated_at'])
+            # Parse updated_at (handle both date and datetime formats)
+            # Split by space to get date part: '2025-11-25 22:55:02' -> '2025-11-25'
+            updated_str = str(goal['updated_at']).split()[0]
+            updated_date = date.fromisoformat(updated_str)
             week_start_date = date.fromisoformat(goal['week_start'])
             
             # If updated_at is within the same week, don't allow another update

@@ -70,7 +70,7 @@ def register():
         )
         db.commit()
 
-        # Fetch new user
+        # FIXED: Fetch new user with created_at
         user = db.query_one(
             "SELECT id, email, name, created_at FROM users WHERE email = ?",
             (email,)
@@ -82,11 +82,13 @@ def register():
         # Generate token
         token = generate_token(user["id"])
 
+        # FIXED: Include created_at in response
         return jsonify({
             "user": {
                 "id": user["id"],
                 "email": user["email"],
-                "name": user["name"]
+                "name": user["name"],
+                "created_at": user["created_at"]
             },
             "token": token
         }), 201
@@ -130,6 +132,12 @@ def login():
         )
         db.commit()
 
+        # FIXED: Get updated last_login
+        updated_user = db.query_one(
+            "SELECT id, email, name, last_login FROM users WHERE id = ?",
+            (user["id"],)
+        )
+
         # Check onboarding status
         onboarding_done = db.query_one(
             "SELECT id FROM onboarding_data WHERE user_id = ?",
@@ -139,11 +147,13 @@ def login():
         # Generate token
         token = generate_token(user["id"])
 
+        # FIXED: Include last_login in response
         return jsonify({
             "user": {
-                "id": user["id"],
-                "email": user["email"],
-                "name": user["name"]
+                "id": updated_user["id"],
+                "email": updated_user["email"],
+                "name": updated_user["name"],
+                "last_login": updated_user["last_login"]
             },
             "token": token,
             "has_completed_onboarding": onboarding_done

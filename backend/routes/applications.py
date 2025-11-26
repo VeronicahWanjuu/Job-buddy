@@ -2,7 +2,8 @@ from flask import Blueprint, request, jsonify
 from backend.database.db import db
 from backend.utils.decorators import require_auth
 from backend.services.streak_service import update_user_streak
-from backend.services.notification_service import (
+# FIXED IMPORT - use utils wrapper that handles days_ahead
+from backend.utils.notifications import (
     create_follow_up_notification,
     create_motivation_notification
 )
@@ -129,6 +130,7 @@ def create_application():
             )
             db.commit()
 
+            # FIXED: Now using wrapper function that handles days_ahead
             create_follow_up_notification(request.user_id, app_row['id'], days_ahead=7)
             update_user_streak(request.user_id, points=10)
 
@@ -269,6 +271,7 @@ def update_application(app_id):
                 )
                 db.commit()
 
+                # FIXED: Now using wrapper function that handles days_ahead
                 create_follow_up_notification(request.user_id, app_id, days_ahead=7)
                 update_user_streak(request.user_id, points=10)
 
