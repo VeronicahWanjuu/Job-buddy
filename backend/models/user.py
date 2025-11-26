@@ -293,7 +293,7 @@ class User:
         Raises:
             ValueError: If validation fails
         """
-        # Verify old password
+        # Verify old password against current in-memory hash
         if not self.verify_password(old_password, self.password_hash):
             raise ValueError("Current password is incorrect")
         
@@ -306,20 +306,31 @@ class User:
         new_hash = self.hash_password(new_password)
         
         try:
-            db.execute_update('''
+            # Update in database (execute_update auto-commits)
+            rows_affected = db.execute_update('''
                 UPDATE users SET password_hash = ? WHERE id = ?
             ''', (new_hash, self.id))
             
-            # CRITICAL FIX: Refresh password hash from database to ensure consistency
-            user_data = db.execute_one('SELECT password_hash FROM users WHERE id = ?', (self.id,))
-            if user_data:
-                self.password_hash = user_data['password_hash']
+            if rows_affected == 0:
+                return False
+            
+            # CRITICAL: Refresh from database to stay in sync
+            fresh_data = db.execute_one(
+                'SELECT password_hash FROM users WHERE id = ?', 
+                (self.id,)
+            )
+            
+            if fresh_data:
+                self.password_hash = fresh_data['password_hash']
             else:
+                # Fallback: use the hash we just set
                 self.password_hash = new_hash
             
             return True
-        except DatabaseError:
-            return False
+            
+        except DatabaseError as e:
+            # Re-raise as ValueError for consistency
+            raise ValueError(f"Failed to change password: {e}")
     
     def deactivate(self) -> bool:
         """Deactivate user account"""
