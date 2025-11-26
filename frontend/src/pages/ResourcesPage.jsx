@@ -39,7 +39,7 @@ const ResourcesPage = () => {
       const response = await api.get('/resources');
       setResources(response.data);
       setFilteredResources(response.data);
-    } catch (error) {
+    } catch (err) {
       toast.error('Failed to load resources');
     } finally {
       setLoading(false);

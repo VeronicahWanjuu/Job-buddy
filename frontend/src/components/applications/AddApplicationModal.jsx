@@ -35,7 +35,7 @@ const AddApplicationModal = ({ open, onClose, onSuccess }) => {
     try {
       const response = await api.get('/companies');
       setCompanies(response.data);
-    } catch (error) {
+    } catch (err) {
       toast.error('Failed to load companies');
     }
   };

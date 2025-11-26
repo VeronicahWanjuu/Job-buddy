@@ -28,13 +28,6 @@ const Navbar = ({ onMenuClick }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [notificationCount, setNotificationCount] = useState(0);
 
-  // 🔄 POLL NOTIFICATIONS EVERY 60 SECONDS
-  useEffect(() => {
-    fetchUnreadCount();
-    const intervalId = setInterval(fetchUnreadCount, 60000);
-    return () => clearInterval(intervalId);
-  }, []);
-
   const fetchUnreadCount = async () => {
     try {
       const response = await api.get('/notifications/unread-count');
@@ -43,6 +36,14 @@ const Navbar = ({ onMenuClick }) => {
       console.error('Failed to fetch notification count');
     }
   };
+
+  // 🔄 POLL NOTIFICATIONS EVERY 60 SECONDS
+  useEffect(() => {
+    fetchUnreadCount();
+    const intervalId = setInterval(fetchUnreadCount, 60000);
+    return () => clearInterval(intervalId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleProfileClick = (event) => {
     setAnchorEl(event.currentTarget);

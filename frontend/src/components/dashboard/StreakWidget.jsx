@@ -1,5 +1,5 @@
 import { Paper, Typography, Box, Chip } from '@mui/material';
-import { LocalFire, EmojiEvents, Star } from '@mui/icons-material';
+import { Whatshot, EmojiEvents, Star } from '@mui/icons-material';
 
 const StreakWidget = ({ streak }) => {
   return (
@@ -9,7 +9,7 @@ const StreakWidget = ({ streak }) => {
       </Typography>
 
       <Box sx={{ textAlign: 'center', my: 3 }}>
-        <LocalFire sx={{ fontSize: 64, color: 'orange' }} />
+        <Whatshot sx={{ fontSize: 64, color: 'orange' }} />
         <Typography variant="h3" component="div">
           {streak?.current_streak || 0}
         </Typography>

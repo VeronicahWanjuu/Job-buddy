@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { toast } from 'react-toastify';
 
@@ -9,18 +8,29 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   // Initialize auth state from localStorage
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
+    const initializeAuth = () => {
+      const storedToken = localStorage.getItem('token');
+      const storedUser = localStorage.getItem('user');
 
-    if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(JSON.parse(storedUser));
-    }
-    setLoading(false);
+      if (storedToken && storedUser) {
+        try {
+          setToken(storedToken);
+          setUser(JSON.parse(storedUser));
+        } catch (error) {
+          // Invalid stored data, clear it
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+        }
+      }
+      setLoading(false);
+    };
+
+    // Use setTimeout to avoid synchronous setState in effect
+    const timer = setTimeout(initializeAuth, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   const login = async (email, password) => {
@@ -35,11 +45,11 @@ export const AuthProvider = ({ children }) => {
 
       toast.success(`Welcome back, ${userData.name}!`);
 
-      // Redirect based on onboarding status
+      // Redirect based on onboarding status - use window.location for navigation
       if (has_completed_onboarding) {
-        navigate('/dashboard');
+        window.location.href = '/dashboard';
       } else {
-        navigate('/onboarding');
+        window.location.href = '/onboarding';
       }
     } catch (error) {
       // Error handled by interceptor
@@ -58,7 +68,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('user', JSON.stringify(userData));
 
       toast.success(`Welcome to JobBuddy, ${userData.name}!`);
-      navigate('/onboarding');
+      window.location.href = '/onboarding';
     } catch (error) {
       throw error;
     }
@@ -70,7 +80,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     toast.info('Logged out successfully');
-    navigate('/login');
+    window.location.href = '/login';
   };
 
   const updateUser = (userData) => {

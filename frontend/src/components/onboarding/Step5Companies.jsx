@@ -17,6 +17,9 @@ const Step5Companies = ({ formData, setFormData }) => {
   const [companyName, setCompanyName] = useState('');
   const [companyWebsite, setCompanyWebsite] = useState('');
 
+  // Ensure companies array exists
+  const companies = formData.companies || [];
+
   const handleAddCompany = () => {
     if (companyName.trim()) {
       const newCompany = {
@@ -25,7 +28,7 @@ const Step5Companies = ({ formData, setFormData }) => {
       };
       setFormData({
         ...formData,
-        companies: [...formData.companies, newCompany],
+        companies: [...companies, newCompany],
       });
       setCompanyName('');
       setCompanyWebsite('');
@@ -33,11 +36,11 @@ const Step5Companies = ({ formData, setFormData }) => {
   };
 
   const handleRemoveCompany = (index) => {
-    const newCompanies = formData.companies.filter((_, i) => i !== index);
+    const newCompanies = companies.filter((_, i) => i !== index);
     setFormData({ ...formData, companies: newCompanies });
   };
 
-  const handleKeyPress = (e) => {
+  const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       handleAddCompany();
@@ -59,7 +62,7 @@ const Step5Companies = ({ formData, setFormData }) => {
           label="Company Name"
           value={companyName}
           onChange={(e) => setCompanyName(e.target.value)}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyDown}
           sx={{ mb: 2 }}
         />
 
@@ -69,7 +72,7 @@ const Step5Companies = ({ formData, setFormData }) => {
           placeholder="https://example.com"
           value={companyWebsite}
           onChange={(e) => setCompanyWebsite(e.target.value)}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyDown}
           sx={{ mb: 2 }}
         />
 
@@ -83,13 +86,13 @@ const Step5Companies = ({ formData, setFormData }) => {
         </Button>
       </Paper>
 
-      {formData.companies.length > 0 && (
+      {companies.length > 0 && (
         <Paper variant="outlined">
           <List>
-            {formData.companies.map((company, index) => (
+            {companies.map((company, index) => (
               <ListItem
                 key={index}
-                divider={index < formData.companies.length - 1}
+                divider={index < companies.length - 1}
               >
                 <ListItemText
                   primary={company.name}
@@ -110,8 +113,8 @@ const Step5Companies = ({ formData, setFormData }) => {
       <Box sx={{ mt: 3, p: 2, bgcolor: 'info.light', borderRadius: 1 }}>
         <Typography variant="body2">
           💡 <strong>Tip:</strong> You've added{' '}
-          {formData.companies.length}{' '}
-          compan{formData.companies.length === 1 ? 'y' : 'ies'} so far.
+          {companies.length}{' '}
+          compan{companies.length === 1 ? 'y' : 'ies'} so far.
         </Typography>
       </Box>
     </Box>

@@ -36,6 +36,7 @@ const ApplicationDetailModal = ({ open, onClose, applicationId }) => {
     if (open && applicationId) {
       fetchDetails();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, applicationId]);
 
   const fetchDetails = async () => {
@@ -65,19 +66,23 @@ const ApplicationDetailModal = ({ open, onClose, applicationId }) => {
       <DialogContent>
         {loading ? (
           <LoadingSpinner />
+        ) : !data || !data.application ? (
+          <Typography variant="body2" color="text.secondary" sx={{ py: 2, textAlign: 'center' }}>
+            Failed to load application details
+          </Typography>
         ) : (
           <>
             {/* Application Info */}
             <Box sx={{ mb: 3 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                 <Business color="primary" />
-                <Typography variant="h6">{data.application.company_name}</Typography>
+                <Typography variant="h6">{data.application.company_name || 'Unknown Company'}</Typography>
               </Box>
 
               <Chip
-                label={data.application.status}
+                label={data.application.status || 'Unknown'}
                 sx={{
-                  bgcolor: STATUS_COLORS[data.application.status],
+                  bgcolor: STATUS_COLORS[data.application.status] || '#9E9E9E',
                   color: 'white',
                   mb: 2,
                 }}

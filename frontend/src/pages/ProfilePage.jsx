@@ -25,7 +25,7 @@ import { toast } from 'react-toastify';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const ProfilePage = () => {
-  const { user, updateUser, logout } = useAuth();
+  const { updateUser, logout } = useAuth();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -50,7 +50,7 @@ const ProfilePage = () => {
         email: response.data.email || '',
         email_notifications_enabled: response.data.email_notifications_enabled || false,
       });
-    } catch (error) {
+    } catch (err) {
       toast.error('Failed to load profile');
     } finally {
       setLoading(false);
@@ -99,8 +99,8 @@ const ProfilePage = () => {
       updateUser(response.data);
       toast.success('Profile updated successfully');
       setProfileData(response.data);
-    } catch (error) {
-      toast.error(error.response?.data?.error || 'Failed to update profile');
+    } catch (err) {
+      toast.error(err.response?.data?.error || 'Failed to update profile');
     } finally {
       setSaving(false);
     }
@@ -111,7 +111,7 @@ const ProfilePage = () => {
       await api.delete('/auth/profile');
       toast.success('Account deleted successfully');
       logout();
-    } catch (error) {
+    } catch (err) {
       toast.error('Failed to delete account');
     }
     setDeleteDialogOpen(false);

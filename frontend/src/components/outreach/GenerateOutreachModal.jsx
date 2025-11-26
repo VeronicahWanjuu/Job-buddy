@@ -33,6 +33,7 @@ const GenerateOutreachModal = ({ open, onClose, contactId, companyId, applicatio
     if (open && contactId && companyId) {
       generateTemplate();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, contactId, companyId, templateType]);
 
   const generateTemplate = async () => {
@@ -48,7 +49,7 @@ const GenerateOutreachModal = ({ open, onClose, contactId, companyId, applicatio
       setSubject(response.data.subject);
       setBody(response.data.body);
       setEditingTips(response.data.editing_tips);
-    } catch (error) {
+    } catch (err) {
       toast.error('Failed to generate template');
     } finally {
       setLoading(false);

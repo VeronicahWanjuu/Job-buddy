@@ -17,7 +17,6 @@ import { toast } from 'react-toastify';
 
 const MicroQuestsWidget = () => {
   const [quests, setQuests] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchQuests();
@@ -27,10 +26,8 @@ const MicroQuestsWidget = () => {
     try {
       const response = await api.get('/goals/micro-quests');
       setQuests(response.data);
-    } catch (error) {
+    } catch (err) {
       toast.error('Failed to load micro-quests');
-    } finally {
-      setLoading(false);
     }
   };
 

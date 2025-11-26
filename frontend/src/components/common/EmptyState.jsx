@@ -2,7 +2,7 @@ import { Box, Typography, Button } from '@mui/material';
 import { Inbox as InboxIcon } from '@mui/icons-material';
 
 const EmptyState = ({
-  icon: Icon = InboxIcon,
+  icon: IconComponent = InboxIcon,
   title = 'No items found',
   message = 'Get started by adding your first item',
   actionLabel,
@@ -18,7 +18,7 @@ const EmptyState = ({
       textAlign="center"
       p={4}
     >
-      <Icon sx={{ fontSize: 64, color: 'text.secondary', mb: 2 }} />
+      <IconComponent sx={{ fontSize: 64, color: 'text.secondary', mb: 2 }} />
       <Typography variant="h6" gutterBottom>
         {title}
       </Typography>

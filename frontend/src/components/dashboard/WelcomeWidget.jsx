@@ -1,5 +1,5 @@
 import { Paper, Typography, Box } from '@mui/material';
-import { WavingHand } from '@mui/icons-material';
+import { EmojiPeople } from '@mui/icons-material';
 
 const WelcomeWidget = ({ userName, dreamMilestone }) => {
   const getGreeting = () => {
@@ -12,7 +12,7 @@ const WelcomeWidget = ({ userName, dreamMilestone }) => {
   return (
     <Paper sx={{ p: 3, background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white' }}>
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-        <WavingHand sx={{ mr: 1, fontSize: 32 }} />
+        <EmojiPeople sx={{ mr: 1, fontSize: 32 }} />
         <Typography variant="h5">
           {getGreeting()}, {userName}!
         </Typography>

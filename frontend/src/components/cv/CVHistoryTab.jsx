@@ -30,7 +30,7 @@ const CVHistoryTab = ({ onViewAnalysis }) => {
     try {
       const response = await api.get('/cv/history');
       setHistory(response.data);
-    } catch (error) {
+    } catch (err) {
       toast.error('Failed to load history');
     } finally {
       setLoading(false);

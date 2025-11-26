@@ -57,7 +57,7 @@ const Step6Review = ({ formData }) => {
             <ListItemText
               primary="Target Companies"
               secondary={
-                formData.companies.length > 0
+                (formData.companies && formData.companies.length > 0)
                   ? `${formData.companies.length} companies added`
                   : 'None added yet'
               }
@@ -65,7 +65,7 @@ const Step6Review = ({ formData }) => {
           </ListItem>
         </List>
 
-        {formData.companies.length > 0 && (
+        {formData.companies && formData.companies.length > 0 && (
           <Box sx={{ mt: 2 }}>
             <Typography variant="subtitle2" gutterBottom>
               Your Target Companies:
