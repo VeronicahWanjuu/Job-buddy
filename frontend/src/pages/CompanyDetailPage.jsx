@@ -1,3 +1,5 @@
+// frontend/src/pages/CompanyDetailPage.jsx
+
 import { useState, useEffect } from 'react';
 import {
   Container,
@@ -48,7 +50,8 @@ const CompanyDetailPage = () => {
     try {
       const response = await api.get(`/companies/${id}`);
       setData(response.data);
-    } catch (error) {
+    } catch {
+      // FIX: Remove unused 'error' variable
       toast.error('Failed to load company details');
       navigate('/companies');
     } finally {
@@ -68,7 +71,8 @@ const CompanyDetailPage = () => {
       await api.delete(`/contacts/${contact.id}`);
       toast.success('Contact deleted');
       fetchCompanyDetails();
-    } catch (error) {
+    } catch {
+      // FIX: Remove unused 'error' variable
       toast.error('Failed to delete contact');
     }
   };
@@ -96,6 +100,7 @@ const CompanyDetailPage = () => {
         Back to Companies
       </Button>
 
+      {/* COMPANY HEADER */}
       <Paper sx={{ p: 3, mb: 3 }}>
         <Box sx={{ display: 'flex', alignItems: 'start', mb: 2 }}>
           <Business sx={{ fontSize: 48, color: 'primary.main', mr: 2 }} />
@@ -147,6 +152,7 @@ const CompanyDetailPage = () => {
         )}
       </Paper>
 
+      {/* TABS SECTION */}
       <Paper sx={{ mb: 3 }}>
         <Tabs value={tabValue} onChange={(e, v) => setTabValue(v)}>
           <Tab label={`Applications (${data.applications?.length || 0})`} />
@@ -154,12 +160,21 @@ const CompanyDetailPage = () => {
         </Tabs>
 
         <Box sx={{ p: 3 }}>
+          {/* APPLICATIONS TAB */}
           {tabValue === 0 && (
             <>
               {data.applications?.length > 0 ? (
                 <List>
                   {data.applications.map((app) => (
-                    <ListItem key={app.id} divider>
+                    <ListItem 
+                      key={app.id} 
+                      divider
+                      sx={{ 
+                        cursor: 'pointer',
+                        '&:hover': { bgcolor: 'action.hover' }
+                      }}
+                      onClick={() => navigate('/applications')}
+                    >
                       <ListItemText
                         primary={app.job_title}
                         secondary={`Applied: ${formatDate(app.applied_date || app.created_at)}`}
@@ -176,13 +191,25 @@ const CompanyDetailPage = () => {
                   ))}
                 </List>
               ) : (
-                <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center', py: 3 }}>
-                  No applications yet
-                </Typography>
+                <Box sx={{ textAlign: 'center', py: 4 }}>
+                  <Typography variant="body2" color="text.secondary" gutterBottom>
+                    No applications yet
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    startIcon={<Add />}
+                    onClick={() => navigate('/applications')}
+                    sx={{ mt: 1 }}
+                  >
+                    Add First Application
+                  </Button>
+                </Box>
               )}
             </>
           )}
 
+          {/* CONTACTS TAB */}
           {tabValue === 1 && (
             <>
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
@@ -204,20 +231,33 @@ const CompanyDetailPage = () => {
                         contact={contact}
                         onEdit={handleEditContact}
                         onDelete={handleDeleteContact}
+                        onRefresh={fetchCompanyDetails}
                       />
                     </Grid>
                   ))}
                 </Grid>
               ) : (
-                <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center', py: 3 }}>
-                  No contacts yet
-                </Typography>
+                <Box sx={{ textAlign: 'center', py: 4 }}>
+                  <Typography variant="body2" color="text.secondary" gutterBottom>
+                    No contacts yet
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    startIcon={<Add />}
+                    onClick={() => setContactModalOpen(true)}
+                    sx={{ mt: 1 }}
+                  >
+                    Add First Contact
+                  </Button>
+                </Box>
               )}
             </>
           )}
         </Box>
       </Paper>
 
+      {/* ADD/EDIT CONTACT MODAL */}
       <AddContactModal
         open={contactModalOpen}
         onClose={handleModalClose}
