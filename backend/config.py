@@ -17,14 +17,15 @@ class DevelopmentConfig(BaseConfig):
 
 class ProductionConfig(BaseConfig):
     DEBUG = False
+    DATABASE_URL = os.getenv("DATABASE_URL", "backend/jobbuddy.db")
 
 class TestingConfig(BaseConfig):
     TESTING = True
-    DATABASE_URL = ":memory:"  # In-memory database for tests
+    DATABASE_URL = ":memory:"
     DEBUG = True
 
 config_by_name = {
     "development": DevelopmentConfig,
     "production": ProductionConfig,
-    "testing": TestingConfig,  # ← ADD THIS LINE
+    "testing": TestingConfig,
 }

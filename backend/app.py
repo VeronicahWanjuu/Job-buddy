@@ -8,11 +8,11 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from flask import Flask, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
+
 from backend.config import config_by_name
 from backend.database.db import db
 
 load_dotenv()
-
 
 def create_app():
     """Application factory pattern"""
@@ -27,15 +27,22 @@ def create_app():
     if db.connection is None:
         db.connect(db_path)
     
-    # CORS
+    # CORS - Allow multiple origins for production
     frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
+    allowed_origins = [
+        frontend_url,
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:3000",
+    ]
+    
+    # Add production frontend URL if exists
+    if "render.com" in frontend_url:
+        allowed_origins.append(frontend_url)
+    
     CORS(
         app,
-        origins=[
-            frontend_url,
-            "http://127.0.0.1:5173",
-            "http://localhost:3000",
-        ],
+        origins=allowed_origins,
         supports_credentials=True,
     )
     
@@ -82,7 +89,8 @@ def create_app():
     
     return app
 
+# Create app instance for gunicorn
+app = create_app()
 
 if __name__ == "__main__":
-    app = create_app()
     app.run(debug=True, host="0.0.0.0", port=5000)

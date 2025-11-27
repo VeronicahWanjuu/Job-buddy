@@ -1,20 +1,42 @@
 # Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# Virtual environment
-.venv/
+*.py[cod]
+*$py.class
+*.so
+.Python
 venv/
+.venv/
+env/
+ENV/
 
-# Databases
+# Database
 *.db
+*.sqlite
 *.sqlite3
 
-# Pytest cache
-.pytest_cache/
+# Flask
+instance/
+.webassets-cache
 
-# Environment files
+# Environment
 .env
-.env.*
+.env.local
+
+# Uploads
+backend/uploads/
+
+# Node
+node_modules/
+dist/
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/

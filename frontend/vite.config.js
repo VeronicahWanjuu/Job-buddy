@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
-    host: true, // Listen on all network interfaces
+    host: true,
     strictPort: true,
     proxy: {
       '/api': {
@@ -15,6 +15,11 @@ export default defineConfig({
         secure: false,
       }
     }
+  },
+  preview: {
+    port: 5173,
+    host: true,
+    strictPort: false,
   },
   resolve: {
     alias: {
