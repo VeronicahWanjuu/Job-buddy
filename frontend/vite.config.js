@@ -18,8 +18,9 @@ export default defineConfig({
   },
   preview: {
     port: 5173,
-    host: true,
+    host: '0.0.0.0',
     strictPort: false,
+    allowedHosts: ['jobbuddy-frontend.onrender.com'],
   },
   resolve: {
     alias: {
