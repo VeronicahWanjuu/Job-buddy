@@ -85,7 +85,6 @@ class Streak:
                 days_diff = (today - last_activity).days
                 
                 if days_diff == 0:
-                    # Activity today, don't change streak count
                     new_current_streak = self.current_streak
                     new_longest_streak = self.longest_streak
                 elif days_diff == 1:

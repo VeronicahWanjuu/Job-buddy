@@ -1,5 +1,3 @@
-// frontend/src/pages/CompanyDetailPage.jsx
-
 import { useState, useEffect } from 'react';
 import {
   Container,
@@ -42,7 +40,6 @@ const CompanyDetailPage = () => {
 
   useEffect(() => {
     fetchCompanyDetails();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const fetchCompanyDetails = async () => {
@@ -51,7 +48,6 @@ const CompanyDetailPage = () => {
       const response = await api.get(`/companies/${id}`);
       setData(response.data);
     } catch {
-      // FIX: Remove unused 'error' variable
       toast.error('Failed to load company details');
       navigate('/companies');
     } finally {
@@ -72,7 +68,6 @@ const CompanyDetailPage = () => {
       toast.success('Contact deleted');
       fetchCompanyDetails();
     } catch {
-      // FIX: Remove unused 'error' variable
       toast.error('Failed to delete contact');
     }
   };
@@ -105,7 +100,19 @@ const CompanyDetailPage = () => {
         <Box sx={{ display: 'flex', alignItems: 'start', mb: 2 }}>
           <Business sx={{ fontSize: 48, color: 'primary.main', mr: 2 }} />
           <Box sx={{ flex: 1 }}>
-            <Typography variant="h4" gutterBottom>
+            <Typography 
+              variant="h4" 
+              gutterBottom
+              sx={{ 
+                textAlign: 'center',
+                textTransform: 'uppercase',
+                fontWeight: 700,
+                background: 'linear-gradient(135deg, #1e40af 0%, #06b6d4 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                letterSpacing: 2,
+              }}
+            >
               {data.company.name}
             </Typography>
             

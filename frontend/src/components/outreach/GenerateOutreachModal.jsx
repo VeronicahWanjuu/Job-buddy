@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -29,14 +29,7 @@ const GenerateOutreachModal = ({ open, onClose, contactId, companyId, applicatio
   const [body, setBody] = useState('');
   const [editingTips, setEditingTips] = useState('');
 
-  useEffect(() => {
-    if (open && contactId && companyId) {
-      generateTemplate();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, contactId, companyId, templateType]);
-
-  const generateTemplate = async () => {
+  const generateTemplate = useCallback(async () => {
     setLoading(true);
     try {
       const response = await api.post('/outreach/templates/generate', {
@@ -49,12 +42,18 @@ const GenerateOutreachModal = ({ open, onClose, contactId, companyId, applicatio
       setSubject(response.data.subject);
       setBody(response.data.body);
       setEditingTips(response.data.editing_tips);
-    } catch (err) {
+    } catch {
       toast.error('Failed to generate template');
     } finally {
       setLoading(false);
     }
-  };
+  }, [contactId, companyId, applicationId, templateType]);
+
+  useEffect(() => {
+    if (open && contactId && companyId) {
+      generateTemplate();
+    }
+  }, [open, contactId, companyId, templateType, generateTemplate]);
 
   const handleLogOutreach = () => {
     onClose({ subject, body });

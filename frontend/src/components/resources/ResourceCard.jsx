@@ -1,4 +1,3 @@
-// frontend/src/components/resources/ResourceCard.jsx
 import {
   Card,
   CardContent,
@@ -12,6 +11,7 @@ import {
   Build,
   Description,
   OpenInNew,
+  MenuBook,
 } from '@mui/icons-material';
 
 const ICON_MAP = {
@@ -21,20 +21,32 @@ const ICON_MAP = {
 };
 
 const ResourceCard = ({ resource }) => {
+  const getTagColor = (level) => {
+    const colors = {
+      'beginner': 'success',
+      'intermediate': 'warning',
+      'advanced': 'error'
+    };
+    return colors[level.toLowerCase()] || 'default';
+  };
+
   return (
-    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', mb: 1 }}>
       <CardContent sx={{ flexGrow: 1 }}>
         <Box sx={{ display: 'flex', alignItems: 'start', mb: 2 }}>
           <Box sx={{ mr: 2, color: 'primary.main' }}>
             {ICON_MAP[resource.type] || <Article />}
           </Box>
           <Box sx={{ flex: 1 }}>
-            <Typography variant="h6" component="div" gutterBottom>
-              {resource.title}
-            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+              <MenuBook color="primary" />
+              <Typography variant="h6" component="div">
+                {resource.title}
+              </Typography>
+            </Box>
             <Box sx={{ mb: 1 }}>
               <Chip label={resource.category} size="small" sx={{ mr: 1 }} />
-              <Chip label={resource.difficulty} size="small" color="primary" />
+              <Chip label={resource.difficulty} size="small" color={getTagColor(resource.difficulty)} />
             </Box>
           </Box>
         </Box>

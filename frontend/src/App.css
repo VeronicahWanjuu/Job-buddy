@@ -40,3 +40,20 @@
 .read-the-docs {
   color: #888;
 }
+
+.dashboard-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.status-planned { color: #757575; }
+.status-applied { color: #2196F3; }
+.status-interview { color: #FF9800; }
+.status-offer { color: #4CAF50; }
+.status-rejected { color: #F44336; }

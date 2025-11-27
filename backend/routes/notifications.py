@@ -125,7 +125,6 @@ def mark_notification_read(notif_id):
         )
         db.commit()
         
-        # Fetch updated notification
         updated_notif = db.query_one(
             "SELECT * FROM notifications WHERE id = ?",
             (notif_id,)

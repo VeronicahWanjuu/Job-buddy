@@ -2,7 +2,6 @@ from flask import Blueprint, request, jsonify
 from backend.database.db import db
 from backend.utils.decorators import require_auth
 from backend.services.streak_service import update_user_streak
-# FIXED IMPORT - use utils wrapper that handles days_ahead
 from backend.utils.notifications import (
     create_follow_up_notification,
     create_motivation_notification
@@ -130,7 +129,6 @@ def create_application():
             )
             db.commit()
 
-            # FIXED: Now using wrapper function that handles days_ahead
             create_follow_up_notification(request.user_id, app_row['id'], days_ahead=7)
             update_user_streak(request.user_id, points=10)
 
@@ -237,8 +235,6 @@ def update_application(app_id):
             updates.append("status = ?")
             params.append(new_status)
             
-            # CRITICAL FIX: If changing to 'Applied', set applied_date in the SAME UPDATE
-            # This is required because of the database constraint
             if new_status == 'Applied' and previous_status != 'Applied':
                 updates.append("applied_date = ?")
                 params.append(date.today().isoformat())
@@ -246,7 +242,6 @@ def update_application(app_id):
         if not updates:
             return jsonify({"error": "No valid fields to update"}), 400
 
-        # Execute update with all changes in ONE transaction
         params.append(app_id)
         db.execute(
             f"UPDATE applications SET {', '.join(updates)} WHERE id = ?",
@@ -254,7 +249,6 @@ def update_application(app_id):
         )
         db.commit()
 
-        # Handle status change side effects AFTER successful update
         if new_status and new_status != previous_status:
             if new_status == 'Applied':
                 today = date.today()
@@ -271,7 +265,6 @@ def update_application(app_id):
                 )
                 db.commit()
 
-                # FIXED: Now using wrapper function that handles days_ahead
                 create_follow_up_notification(request.user_id, app_id, days_ahead=7)
                 update_user_streak(request.user_id, points=10)
 
@@ -279,7 +272,6 @@ def update_application(app_id):
                 message = random.choice(REJECTION_MESSAGES)
                 create_motivation_notification(request.user_id, message)
 
-        # Fetch and return the updated application
         updated_app = db.query_one(
             """
             SELECT a.*, c.name AS company_name, c.website AS company_website

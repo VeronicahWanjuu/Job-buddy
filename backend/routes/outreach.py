@@ -406,7 +406,6 @@ def update_outreach(outreach_id):
         )
         db.commit()
         
-        # Fetch updated outreach
         updated = db.query_one(
             """
             SELECT o.*, c.name AS contact_name, c.email AS contact_email

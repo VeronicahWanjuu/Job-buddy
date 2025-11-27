@@ -89,7 +89,6 @@ def get_current_goal():
         outreach_pct = (goal['outreach_current'] / goal['outreach_goal'] * 100) \
                       if goal['outreach_goal'] > 0 else 0
         
-        # Calculate days remaining in week (0-6, where 0 = Sunday)
         days_remaining = 6 - today.weekday()
         
         return jsonify({
@@ -151,15 +150,11 @@ def update_goals():
         if not goal:
             return jsonify({"error": "No goal found for current week"}), 404
         
-        # Check if already updated this week
         if goal['updated_at']:
-            # Parse updated_at (handle both date and datetime formats)
-            # Split by space to get date part: '2025-11-25 22:55:02' -> '2025-11-25'
             updated_str = str(goal['updated_at']).split()[0]
             updated_date = date.fromisoformat(updated_str)
             week_start_date = date.fromisoformat(goal['week_start'])
             
-            # If updated_at is within the same week, don't allow another update
             if updated_date >= week_start_date:
                 return jsonify({
                     "error": "Goals can only be updated once per week"
@@ -176,7 +171,6 @@ def update_goals():
         )
         db.commit()
         
-        # Fetch updated goal
         updated_goal = db.query_one(
             "SELECT * FROM goals WHERE user_id = ? AND week_start = ?",
             (request.user_id, week_start.isoformat())

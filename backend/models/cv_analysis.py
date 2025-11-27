@@ -76,7 +76,6 @@ class CVAnalysis:
         if not job_description or len(job_description.strip()) < 50:
             raise ValueError("Job description must be at least 50 characters long")
         
-        # ? FIX: Convert None to empty lists BEFORE json_encode
         matched_keywords = matched_keywords if matched_keywords is not None else []
         missing_keywords = missing_keywords if missing_keywords is not None else []
         suggestions = suggestions if suggestions is not None else []

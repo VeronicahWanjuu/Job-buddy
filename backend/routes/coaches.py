@@ -83,7 +83,6 @@ def get_tip_of_the_day():
         if not coach.get("image_url"):
             coach["image_url"] = DEFAULT_IMAGE
 
-        # Auto-generated specialization-based tips
         specialization_tips = {
             "Tech & Engineering Careers": [
                 "Keep your GitHub active with recent projects.",

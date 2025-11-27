@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   Paper,
   Typography,
@@ -10,26 +10,27 @@ import {
   ListItemSecondaryAction,
   IconButton,
   Chip,
+  ListItemIcon,
 } from '@mui/material';
-import { CheckCircle, Refresh } from '@mui/icons-material';
+import { CheckCircle, Refresh, CheckCircleOutline } from '@mui/icons-material';
 import api from '../../services/api';
 import { toast } from 'react-toastify';
 
 const MicroQuestsWidget = () => {
   const [quests, setQuests] = useState([]);
 
-  useEffect(() => {
-    fetchQuests();
-  }, []);
-
-  const fetchQuests = async () => {
+  const fetchQuests = useCallback(async () => {
     try {
       const response = await api.get('/goals/micro-quests');
       setQuests(response.data);
-    } catch (err) {
+    } catch {
       toast.error('Failed to load micro-quests');
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchQuests();
+  }, [fetchQuests]);
 
   const handleComplete = async (questId) => {
     try {
@@ -42,22 +43,27 @@ const MicroQuestsWidget = () => {
   };
 
   return (
-    <Paper sx={{ p: 3 }}>
+    <Paper sx={{ p: 2.5, height: '100%', display: 'flex', flexDirection: 'column', flex: 1 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-        <Typography variant="h6">Micro-Quests</Typography>
-        <IconButton size="small" onClick={fetchQuests}>
+        <Typography variant="h6" sx={{ fontWeight: 600 }}>Micro-Quests</Typography>
+        <IconButton size="small" onClick={fetchQuests} color="primary">
           <Refresh />
         </IconButton>
       </Box>
 
       {quests.length === 0 ? (
-        <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center', py: 3 }}>
-          🎉 All quests completed! Check back later for more.
-        </Typography>
+        <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center' }}>
+            🎉 All quests completed! Check back later for more.
+          </Typography>
+        </Box>
       ) : (
-        <List>
+        <List sx={{ flexGrow: 1, overflow: 'auto', pr: 1 }}>
           {quests.map((quest) => (
-            <ListItem key={quest.id} divider>
+            <ListItem key={quest.id} divider sx={{ py: 0.5 }}>
+              <ListItemIcon sx={{ minWidth: 36 }}>
+                <CheckCircleOutline color="primary" fontSize="small" />
+              </ListItemIcon>
               <ListItemText
                 primary={quest.title}
                 secondary={

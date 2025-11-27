@@ -4,14 +4,22 @@
   box-sizing: border-box;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
   padding: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(30, 64, 175, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 50%),
+    linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
 }
 
 code {
@@ -39,4 +47,49 @@ code {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    background: 
+      radial-gradient(circle at 20% 50%, rgba(30, 64, 175, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 50%),
+      linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  }
+}
+
+/* Global Card Styling */
+.MuiPaper-root {
+  border-radius: 12px !important;
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    0 1px 2px rgba(0, 0, 0, 0.04) !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(226, 232, 240, 0.6) !important;
+  transition: all 0.2s ease !important;
+}
+
+.MuiPaper-root:hover {
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Typography - Header Font */
+.MuiTypography-h1, .MuiTypography-h2, .MuiTypography-h3, .MuiTypography-h4 {
+  font-family: 'Inter', 'Roboto', sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.MuiTypography-h5, .MuiTypography-h6 {
+  font-family: 'Inter', 'Roboto', sans-serif !important;
+  font-weight: 600 !important;
+}
+
+/* Body Font */
+.MuiTypography-body1, .MuiTypography-body2 {
+  font-family: 'Inter', 'Roboto', sans-serif !important;
+  font-weight: 400 !important;
+  line-height: 1.6 !important;
 }

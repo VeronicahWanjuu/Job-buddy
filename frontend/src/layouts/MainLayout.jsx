@@ -27,7 +27,9 @@ const MainLayout = ({ children }) => {
           p: 3,
           width: { sm: `calc(100% - ${DRAWER_WIDTH}px)` },
           mt: 8,
-          backgroundColor: '#f5f5f5',
+          background: 
+            'radial-gradient(circle at 20% 50%, rgba(30, 64, 175, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 50%), linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%)',
+          backgroundAttachment: 'fixed',
           minHeight: '100vh',
         }}
       >

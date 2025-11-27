@@ -123,7 +123,20 @@ const ProfilePage = () => {
 
   return (
     <Container maxWidth="md">
-      <Typography variant="h4" gutterBottom>
+      <Typography 
+        variant="h4" 
+        gutterBottom
+        sx={{ 
+          textAlign: 'center',
+          textTransform: 'uppercase',
+          fontWeight: 700,
+          background: 'linear-gradient(135deg, #1e40af 0%, #06b6d4 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          letterSpacing: 2,
+          mb: 3,
+        }}
+      >
         Profile Settings
       </Typography>
 

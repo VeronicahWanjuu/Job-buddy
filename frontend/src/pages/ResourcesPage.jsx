@@ -39,7 +39,7 @@ const ResourcesPage = () => {
       const response = await api.get('/resources');
       setResources(response.data);
       setFilteredResources(response.data);
-    } catch (err) {
+    } catch {
       toast.error('Failed to load resources');
     } finally {
       setLoading(false);
@@ -53,11 +53,33 @@ const ResourcesPage = () => {
   }
 
   return (
-    <Container maxWidth="lg">
-      <Typography variant="h4" gutterBottom>
+    <Container maxWidth="lg" sx={{ py: 2 }}>
+      <Typography 
+        variant="h4" 
+        gutterBottom
+        sx={{ 
+          textAlign: 'center',
+          textTransform: 'uppercase',
+          fontWeight: 700,
+          background: 'linear-gradient(135deg, #1e40af 0%, #06b6d4 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          letterSpacing: 2,
+          mb: 3,
+        }}
+      >
         Resources
       </Typography>
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+      <Typography 
+        variant="body2" 
+        color="text.secondary" 
+        sx={{ 
+          mb: 3,
+          textAlign: 'center',
+          maxWidth: 600,
+          mx: 'auto',
+        }}
+      >
         Curated resources to help you succeed in your job search
       </Typography>
 

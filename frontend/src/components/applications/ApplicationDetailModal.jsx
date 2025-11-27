@@ -36,7 +36,6 @@ const ApplicationDetailModal = ({ open, onClose, applicationId }) => {
     if (open && applicationId) {
       fetchDetails();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, applicationId]);
 
   const fetchDetails = async () => {

@@ -40,16 +40,13 @@ def register():
         password = data["password"]
         name = data["name"].strip()
 
-        # Validate email format
         if not validate_email(email):
             return jsonify({"error": "Invalid email format"}), 400
 
-        # Validate password
         valid, msg = validate_password_strength(password)
         if not valid:
             return jsonify({"error": msg}), 400
 
-        # Check duplicate user
         exists = db.query_one(
             "SELECT id FROM users WHERE LOWER(email) = LOWER(?)",
             (email,)
@@ -57,10 +54,8 @@ def register():
         if exists:
             return jsonify({"error": "User with this email already exists"}), 400
 
-        # Hash password
         hashed_pw = hash_password(password)
 
-        # Insert user (DATABASE TRIGGER will auto-create streak)
         db.execute(
             """
             INSERT INTO users (email, password_hash, name, created_at)
@@ -70,7 +65,6 @@ def register():
         )
         db.commit()
 
-        # FIXED: Fetch new user with created_at
         user = db.query_one(
             "SELECT id, email, name, created_at FROM users WHERE email = ?",
             (email,)
@@ -79,10 +73,8 @@ def register():
         if not user:
             return jsonify({"error": "User creation failed"}), 500
 
-        # Generate token
         token = generate_token(user["id"])
 
-        # FIXED: Include created_at in response
         return jsonify({
             "user": {
                 "id": user["id"],
@@ -121,33 +113,27 @@ def login():
         if not user:
             return jsonify({"error": "Invalid email or password"}), 401
 
-        # Verify password
         if not verify_password(password, user["password_hash"]):
             return jsonify({"error": "Invalid email or password"}), 401
 
-        # Update last login
         db.execute(
             "UPDATE users SET last_login = datetime('now') WHERE id = ?",
             (user["id"],)
         )
         db.commit()
 
-        # FIXED: Get updated last_login
         updated_user = db.query_one(
             "SELECT id, email, name, last_login FROM users WHERE id = ?",
             (user["id"],)
         )
 
-        # Check onboarding status
         onboarding_done = db.query_one(
             "SELECT id FROM onboarding_data WHERE user_id = ?",
             (user["id"],)
         ) is not None
 
-        # Generate token
         token = generate_token(user["id"])
 
-        # FIXED: Include last_login in response
         return jsonify({
             "user": {
                 "id": updated_user["id"],

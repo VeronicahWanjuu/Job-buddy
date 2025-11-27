@@ -1,4 +1,3 @@
-// frontend/src/pages/CVMatcherPage.jsx
 import { useState } from 'react';
 import { Container, Typography, Box, Tabs, Tab } from '@mui/material';
 import CVAnalyzeTab from '../components/cv/CVAnalyzeTab';
@@ -8,16 +7,37 @@ const CVMatcherPage = () => {
   const [tabValue, setTabValue] = useState(0);
 
   const handleViewAnalysis = (analysisId) => {
-    // TODO: Open analysis detail modal
     console.log('View analysis:', analysisId);
   };
 
   return (
     <Container maxWidth="lg">
-      <Typography variant="h4" gutterBottom>
+      <Typography 
+        variant="h4" 
+        gutterBottom
+        sx={{ 
+          textAlign: 'center',
+          textTransform: 'uppercase',
+          fontWeight: 700,
+          background: 'linear-gradient(135deg, #1e40af 0%, #06b6d4 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          letterSpacing: 2,
+          mb: 3,
+        }}
+      >
         CV Matcher
       </Typography>
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+      <Typography 
+        variant="body2" 
+        color="text.secondary" 
+        sx={{ 
+          mb: 3,
+          textAlign: 'center',
+          maxWidth: 600,
+          mx: 'auto',
+        }}
+      >
         Analyze your CV against job descriptions to improve your ATS score
       </Typography>
 

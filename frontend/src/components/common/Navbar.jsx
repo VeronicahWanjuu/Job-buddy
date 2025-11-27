@@ -32,7 +32,7 @@ const Navbar = ({ onMenuClick }) => {
     try {
       const response = await api.get('/notifications/unread-count');
       setNotificationCount(response.data.unread_count);
-    } catch (error) {
+    } catch {
       console.error('Failed to fetch notification count');
     }
   };
@@ -42,8 +42,7 @@ const Navbar = ({ onMenuClick }) => {
     fetchUnreadCount();
     const intervalId = setInterval(fetchUnreadCount, 60000);
     return () => clearInterval(intervalId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchUnreadCount]);
 
   const handleProfileClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -68,10 +67,12 @@ const Navbar = ({ onMenuClick }) => {
       position="fixed"
       sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
-        backgroundColor: '#1976d2',
+        background: 'linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)',
+        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        backgroundColor: '#1e40af !important',
       }}
     >
-      <Toolbar>
+      <Toolbar sx={{ justifyContent: 'space-between' }}>
         {/* MOBILE MENU BUTTON */}
         <IconButton
           color="inherit"
@@ -82,13 +83,46 @@ const Navbar = ({ onMenuClick }) => {
           <MenuIcon />
         </IconButton>
 
-        {/* APP TITLE */}
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          {import.meta.env.VITE_APP_NAME || 'JobBuddy'}
-        </Typography>
+        {/* APP TITLE - CENTERED */}
+        <Box sx={{ 
+          position: 'absolute', 
+          left: '50%', 
+          transform: 'translateX(-50%)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          textAlign: 'center'
+        }}>
+          <Typography 
+            variant="h4" 
+            component="div" 
+            sx={{ 
+              fontWeight: 800, 
+              letterSpacing: 2,
+              fontSize: { xs: '1.5rem', sm: '2rem', md: '2.25rem' },
+              color: 'white',
+              textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+            }}
+          >
+            {import.meta.env.VITE_APP_NAME || 'JobBuddy'}
+          </Typography>
+          <Typography 
+            variant="body2" 
+            sx={{ 
+              fontSize: { xs: '0.7rem', sm: '0.85rem' },
+              mt: 0.5,
+              display: { xs: 'none', sm: 'block' },
+              color: 'white',
+              fontWeight: 500,
+              textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
+            }}
+          >
+            Let's get you your dream role
+          </Typography>
+        </Box>
 
         {/* ACTIONS: NOTIFICATIONS + PROFILE MENU */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, ml: 'auto' }}>
           {/* NOTIFICATIONS BUTTON */}
           <IconButton
             color="inherit"

@@ -57,7 +57,7 @@ def optional_auth(f):
                 payload = jwt.decode(token, secret_key, algorithms=['HS256'])
                 request.user_id = payload.get('user_id')
             except:
-                pass  # Silently fail for optional auth
+                pass
         
         return f(*args, **kwargs)
     

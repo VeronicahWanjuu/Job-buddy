@@ -17,15 +17,15 @@ const WeeklyGoalsWidget = ({ goals }) => {
     : 0;
 
   return (
-    <Paper sx={{ p: 3 }}>
-      <Typography variant="h6" gutterBottom>
+    <Paper sx={{ p: 2, height: '100%', width: '100%', display: 'flex', flexDirection: 'column', minHeight: 90 }}>
+      <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
         Weekly Goals
       </Typography>
-      <Typography variant="body2" color="text.secondary" gutterBottom>
+      <Typography variant="body2" color="text.secondary" gutterBottom sx={{ mb: 2 }}>
         {goals?.days_remaining} days remaining this week
       </Typography>
 
-      <Grid container spacing={3} sx={{ mt: 1 }}>
+      <Grid container spacing={3} sx={{ mt: 1, flexGrow: 1 }}>
         <Grid item xs={12}>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
             <TrendingUp sx={{ mr: 1, color: 'primary.main' }} />

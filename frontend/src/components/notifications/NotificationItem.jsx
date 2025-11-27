@@ -1,4 +1,3 @@
-// frontend/src/components/notifications/NotificationItem.jsx
 
 import {
   ListItem,
@@ -19,7 +18,6 @@ import {
 } from '@mui/icons-material';
 import { timeAgo } from '../../utils/helpers';
 
-// Map notification type → icon
 const ICON_MAP = {
   follow_up: <Email />,
   goal_reminder: <TrendingUp />,

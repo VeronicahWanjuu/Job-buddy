@@ -314,7 +314,6 @@ class User:
             if rows_affected == 0:
                 return False
             
-            # CRITICAL: Refresh from database to stay in sync
             fresh_data = db.execute_one(
                 'SELECT password_hash FROM users WHERE id = ?', 
                 (self.id,)
@@ -323,13 +322,11 @@ class User:
             if fresh_data:
                 self.password_hash = fresh_data['password_hash']
             else:
-                # Fallback: use the hash we just set
                 self.password_hash = new_hash
             
             return True
             
         except DatabaseError as e:
-            # Re-raise as ValueError for consistency
             raise ValueError(f"Failed to change password: {e}")
     
     def deactivate(self) -> bool:

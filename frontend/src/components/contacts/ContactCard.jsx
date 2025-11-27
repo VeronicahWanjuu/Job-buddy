@@ -8,7 +8,7 @@ import {
   Button,
 } from '@mui/material';
 import {
-  Person,
+  Person as PersonIcon,
   Email,
   LinkedIn,
   Edit,
@@ -41,12 +41,12 @@ const ContactCard = ({ contact, onEdit, onDelete, onRefresh }) => {
 
   return (
     <>
-      <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', mb: 1 }}>
         <CardContent sx={{ flexGrow: 1 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', mb: 2 }}>
             <Box sx={{ flex: 1 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                <Person color="primary" />
+                <PersonIcon color="action" />
                 <Typography variant="h6">{contact.name}</Typography>
               </Box>
 

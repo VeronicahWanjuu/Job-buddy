@@ -3,7 +3,6 @@ import {
   Add,
   Business,
   Description,
-  Email,
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,52 +11,68 @@ const QuickActionsWidget = () => {
 
   const actions = [
     {
-      label: 'Add Application',
       icon: <Add />,
-      color: 'primary',
+      title: 'Add Application',
+      description: 'Track a new job application',
       onClick: () => navigate('/applications'),
+      color: 'primary'
     },
     {
-      label: 'Add Company',
       icon: <Business />,
-      color: 'secondary',
+      title: 'Add Company',
+      description: 'Add a target company to your list',
       onClick: () => navigate('/companies'),
+      color: 'secondary'
     },
     {
-      label: 'Analyze CV',
       icon: <Description />,
-      color: 'success',
+      title: 'Analyze CV',
+      description: 'Check your CV ATS score',
       onClick: () => navigate('/cv-matcher'),
-    },
-    {
-      label: 'Send Outreach',
-      icon: <Email />,
-      color: 'info',
-      onClick: () => navigate('/companies'),
-    },
+      color: 'success'
+    }
   ];
 
   return (
-    <Paper sx={{ p: 3 }}>
-      <Typography variant="h6" gutterBottom>
+    <Paper sx={{ p: 2.5, height: '100%', display: 'flex', flexDirection: 'column', flex: 1 }}>
+      <Typography variant="h6" gutterBottom sx={{ mb: 2, fontWeight: 600 }}>
         Quick Actions
       </Typography>
-      <Grid container spacing={2} sx={{ mt: 1 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, flexGrow: 1 }}>
         {actions.map((action) => (
-          <Grid item xs={6} key={action.label}>
-            <Button
-              fullWidth
-              variant="outlined"
-              color={action.color}
-              startIcon={action.icon}
-              onClick={action.onClick}
-              sx={{ py: 1.5 }}
-            >
-              {action.label}
-            </Button>
-          </Grid>
+          <Button
+            key={action.title}
+            fullWidth
+            variant="outlined"
+            color={action.color}
+            startIcon={action.icon}
+            onClick={action.onClick}
+            sx={{
+              py: 2,
+              px: 2,
+              justifyContent: 'flex-start',
+              textAlign: 'left',
+              borderWidth: 2,
+              '&:hover': {
+                borderWidth: 2,
+                transform: 'translateX(4px)',
+                boxShadow: 3,
+                bgcolor: `${action.color}.50`,
+              },
+              transition: 'all 0.2s ease',
+            }}
+          >
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 0.5 }}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                {action.title}
+              </Typography>
+              <Typography variant="caption" color="text.secondary">
+                {action.description}
+              </Typography>
+            </Box>
+          </Button>
         ))}
-      </Grid>
+      </Box>
     </Paper>
   );
 };

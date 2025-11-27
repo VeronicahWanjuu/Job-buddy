@@ -44,7 +44,7 @@ const CompaniesPage = () => {
       const response = await api.get('/companies');
       setCompanies(response.data);
       setFilteredCompanies(response.data);
-    } catch (error) {
+    } catch {
       toast.error('Failed to load companies');
     } finally {
       setLoading(false);
@@ -65,7 +65,7 @@ const CompaniesPage = () => {
       await api.delete(`/companies/${company.id}`);
       toast.success('Company deleted');
       fetchCompanies();
-    } catch (error) {
+    } catch {
       toast.error('Failed to delete company');
     }
   };
@@ -83,12 +83,26 @@ const CompaniesPage = () => {
 
   return (
     <Container maxWidth="lg">
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h4">Companies</Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 3, position: 'relative' }}>
+        <Typography 
+          variant="h4" 
+          sx={{ 
+            textAlign: 'center',
+            textTransform: 'uppercase',
+            fontWeight: 700,
+            background: 'linear-gradient(135deg, #1e40af 0%, #06b6d4 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            letterSpacing: 2,
+          }}
+        >
+          Companies
+        </Typography>
         <Button
           variant="contained"
           startIcon={<Add />}
           onClick={() => setAddModalOpen(true)}
+          sx={{ position: 'absolute', right: 0 }}
         >
           Add Company
         </Button>
@@ -117,7 +131,7 @@ const CompaniesPage = () => {
       {filteredCompanies.length === 0 ? (
         <EmptyState
           title="No companies found"
-          message="Start by adding companies you're interested in"
+          message="Start building your target company list. Click 'Add Company' to begin tracking potential employers."
           actionLabel="Add Your First Company"
           onAction={() => setAddModalOpen(true)}
         />

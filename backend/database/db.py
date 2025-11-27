@@ -48,7 +48,6 @@ class DatabaseManager:
         self.connection.row_factory = sqlite3.Row
         self.connection.execute("PRAGMA foreign_keys = ON")
         
-        # Auto-load schema if DB empty
         cursor = self.connection.cursor()
         cursor.execute("SELECT COUNT(*) AS c FROM sqlite_master WHERE type='table'")
         row = cursor.fetchone()
@@ -99,9 +98,7 @@ class DatabaseManager:
         cursor.close()
         return dict(row) if row else None
     
-    # ADDED: Alias for backward compatibility with User model
     def execute_one(self, query, params=()):
-        """Alias for query_one() - for backward compatibility"""
         return self.query_one(query, params)
     
     def query(self, query, params=()):
@@ -113,12 +110,9 @@ class DatabaseManager:
         return [dict(r) for r in rows]
     
     def query_all(self, query, params=()):
-        """Alias for query()"""
         return self.query(query, params)
     
-    # ADDED: Alias for backward compatibility
     def execute_query(self, query, params=()):
-        """Alias for query() - for backward compatibility"""
         return self.query(query, params)
     
     def execute_insert(self, query, params=()):
@@ -148,10 +142,8 @@ class DatabaseManager:
         cursor.close()
         return row_count
     
-    # ADDED: Transaction context manager
     @contextmanager
     def transaction(self):
-        """Context manager for transactions"""
         cursor = self.connection.cursor()
         try:
             yield cursor

@@ -41,10 +41,8 @@ def update_user_streak(user_id: int, points: int = 10) -> dict:
         last_date = date.fromisoformat(last_activity_date)
         
         if last_date == today:
-            # Same day - streak doesn't change
             new_streak = streak_row["current_streak"]
         elif last_date == (today - timedelta(days=1)):
-            # Consecutive day - increment streak
             new_streak = streak_row["current_streak"] + 1
         else:
             # Gap - reset streak

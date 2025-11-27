@@ -1,4 +1,3 @@
-// frontend/src/components/cv/CVHistoryTab.jsx
 import { useState, useEffect } from 'react';
 import {
   Box,
@@ -30,7 +29,7 @@ const CVHistoryTab = ({ onViewAnalysis }) => {
     try {
       const response = await api.get('/cv/history');
       setHistory(response.data);
-    } catch (err) {
+    } catch {
       toast.error('Failed to load history');
     } finally {
       setLoading(false);

@@ -196,7 +196,6 @@ class Goal:
         if not updates:
             return False
         
-        # Trigger will auto-update updated_at
         params.append(self.id)
         
         try:
@@ -204,7 +203,6 @@ class Goal:
                 UPDATE goals SET {', '.join(updates)} WHERE id = ?
             ''', tuple(params))
             
-            # Refresh updated_at from database
             goal = Goal.find_by_id(self.id)
             if goal:
                 self.updated_at = goal.updated_at

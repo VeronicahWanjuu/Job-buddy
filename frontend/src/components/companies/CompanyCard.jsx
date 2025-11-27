@@ -20,7 +20,17 @@ const CompanyCard = ({ company, onEdit, onDelete }) => {
   const navigate = useNavigate();
 
   return (
-    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+    <Card sx={{ 
+      height: '100%', 
+      display: 'flex', 
+      flexDirection: 'column',
+      mb: 1.5,
+      transition: 'transform 0.2s, box-shadow 0.2s',
+      '&:hover': { 
+        transform: 'translateY(-4px)', 
+        boxShadow: 4 
+      }
+    }}>
       <CardContent sx={{ flexGrow: 1 }}>
         <Box sx={{ display: 'flex', alignItems: 'start', mb: 2 }}>
           <Business sx={{ mr: 1, color: 'primary.main', fontSize: 32 }} />

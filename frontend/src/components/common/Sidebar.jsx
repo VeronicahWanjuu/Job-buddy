@@ -33,20 +33,45 @@ const Sidebar = ({ drawerWidth, mobileOpen, onDrawerToggle }) => {
   const location = useLocation();
 
   const drawer = (
-    <Box>
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', background: 'linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%)' }}>
       <Toolbar />
-      <List>
+      <List sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-around', py: 2 }}>
         {menuItems.map((item) => (
-          <ListItem key={item.text} disablePadding>
+          <ListItem key={item.text} disablePadding sx={{ flex: 1, maxHeight: 'calc((100vh - 64px) / 6)' }}>
             <ListItemButton
               selected={location.pathname === item.path}
               onClick={() => {
                 navigate(item.path);
                 if (mobileOpen) onDrawerToggle();
               }}
+              sx={{
+                py: 2,
+                height: '100%',
+                borderLeft: location.pathname === item.path ? '4px solid' : 'none',
+                borderLeftColor: location.pathname === item.path ? '#06b6d4' : 'transparent',
+                bgcolor: location.pathname === item.path ? 'rgba(6, 182, 212, 0.15)' : 'transparent',
+                color: 'white',
+                '&:hover': {
+                  bgcolor: 'rgba(255, 255, 255, 0.08)',
+                },
+                '& .MuiListItemIcon-root': {
+                  color: location.pathname === item.path ? '#06b6d4' : 'rgba(255, 255, 255, 0.85)',
+                },
+                '& .MuiListItemText-primary': {
+                  color: 'white',
+                  fontWeight: 600,
+                }
+              }}
             >
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
+              <ListItemIcon sx={{ minWidth: 40, color: location.pathname === item.path ? '#fbbf24' : 'rgba(255, 255, 255, 0.9)' }}>{item.icon}</ListItemIcon>
+              <ListItemText 
+                primary={item.text} 
+                primaryTypographyProps={{ 
+                  fontSize: '1rem',
+                  fontWeight: location.pathname === item.path ? 700 : 600,
+                  color: 'white',
+                }}
+              />
             </ListItemButton>
           </ListItem>
         ))}
@@ -67,7 +92,12 @@ const Sidebar = ({ drawerWidth, mobileOpen, onDrawerToggle }) => {
         ModalProps={{ keepMounted: true }}
         sx={{
           display: { xs: 'block', sm: 'none' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          '& .MuiDrawer-paper': { 
+            boxSizing: 'border-box', 
+            width: drawerWidth,
+            background: 'linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%)',
+            borderRight: 'none',
+          },
         }}
       >
         {drawer}
@@ -78,7 +108,12 @@ const Sidebar = ({ drawerWidth, mobileOpen, onDrawerToggle }) => {
         variant="permanent"
         sx={{
           display: { xs: 'none', sm: 'block' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          '& .MuiDrawer-paper': { 
+            boxSizing: 'border-box', 
+            width: drawerWidth,
+            background: 'linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%)',
+            borderRight: 'none',
+          },
         }}
         open
       >

@@ -284,7 +284,6 @@ class DatabaseInitializer:
             
             print("  ✅ Inserted weekly goals")
             
-            # 8. STREAKS (auto-created by trigger, update them)
             cursor.execute('''
                 UPDATE streaks SET 
                     current_streak = 5,
@@ -383,7 +382,6 @@ class DatabaseInitializer:
             
             print("  ✅ Inserted CV analysis")
             
-            # Commit all changes
             self.conn.commit()
             print("\n✅ All test data inserted successfully!\n")
             
@@ -423,10 +421,8 @@ class DatabaseInitializer:
             count = cursor.fetchone()[0]
             print(f"    • {table:25s}: {count:3d} records")
         
-        # Test constraints
         print("\n  🔒 Testing Constraints:")
         
-        # Test unique email
         try:
             cursor.execute('''
                 INSERT INTO users (email, password_hash, name)
@@ -436,7 +432,6 @@ class DatabaseInitializer:
         except sqlite3.IntegrityError:
             print("    ✅ UNIQUE constraint working (duplicate email blocked)")
         
-        # Test CHECK constraint
         try:
             cursor.execute('''
                 INSERT INTO applications (user_id, company_id, job_title, status)
@@ -446,7 +441,6 @@ class DatabaseInitializer:
         except sqlite3.IntegrityError:
             print("    ✅ CHECK constraint working (invalid status blocked)")
         
-        # Test foreign key cascade
         cursor.execute("SELECT id FROM users LIMIT 1")
         test_user_id = cursor.fetchone()[0]
         cursor.execute("SELECT COUNT(*) FROM applications WHERE user_id = ?", (test_user_id,))
@@ -455,7 +449,6 @@ class DatabaseInitializer:
         print(f"    ℹ️  User {test_user_id} has {app_count_before} applications")
         print("    ✅ CASCADE DELETE will be tested when user is deleted")
         
-        # Test triggers
         cursor.execute('''
             SELECT updated_at FROM applications WHERE id = 1
         ''')

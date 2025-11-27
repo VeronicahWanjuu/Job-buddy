@@ -24,11 +24,46 @@ import ProfilePage from './pages/ProfilePage';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2',
+      main: '#1e40af', // Deep professional blue - brand color
+      light: '#3b82f6',
+      dark: '#1e3a8a',
     },
     secondary: {
-      main: '#dc004e',
+      main: '#06b6d4', // Modern cyan/teal
+      light: '#22d3ee',
+      dark: '#0891b2',
     },
+    success: {
+      main: '#10b981', // Emerald green
+      light: '#34d399',
+      dark: '#059669',
+    },
+    warning: {
+      main: '#f59e0b', // Amber/orange
+      light: '#fbbf24',
+      dark: '#d97706',
+    },
+    info: {
+      main: '#3b82f6', // Sky blue
+      light: '#60a5fa',
+      dark: '#2563eb',
+    },
+    error: {
+      main: '#ef4444', // Red
+      light: '#f87171',
+      dark: '#dc2626',
+    },
+    background: {
+      default: '#f1f5f9', // Soft slate
+      paper: '#ffffff',
+    },
+    text: {
+      primary: '#0f172a',
+      secondary: '#475569',
+    },
+  },
+  shape: {
+    borderRadius: 12,
   },
 });
 

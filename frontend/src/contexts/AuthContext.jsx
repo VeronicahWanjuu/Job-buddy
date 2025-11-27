@@ -9,7 +9,6 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Initialize auth state from localStorage
   useEffect(() => {
     const initializeAuth = () => {
       const storedToken = localStorage.getItem('token');
@@ -19,8 +18,7 @@ export const AuthProvider = ({ children }) => {
         try {
           setToken(storedToken);
           setUser(JSON.parse(storedUser));
-        } catch (error) {
-          // Invalid stored data, clear it
+        } catch {
           localStorage.removeItem('token');
           localStorage.removeItem('user');
         }
@@ -28,7 +26,6 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     };
 
-    // Use setTimeout to avoid synchronous setState in effect
     const timer = setTimeout(initializeAuth, 0);
     return () => clearTimeout(timer);
   }, []);
@@ -45,15 +42,13 @@ export const AuthProvider = ({ children }) => {
 
       toast.success(`Welcome back, ${userData.name}!`);
 
-      // Redirect based on onboarding status - use window.location for navigation
       if (has_completed_onboarding) {
         window.location.href = '/dashboard';
       } else {
         window.location.href = '/onboarding';
       }
-    } catch (error) {
-      // Error handled by interceptor
-      throw error;
+    } catch {
+      throw new Error('Login failed');
     }
   };
 
@@ -69,8 +64,8 @@ export const AuthProvider = ({ children }) => {
 
       toast.success(`Welcome to JobBuddy, ${userData.name}!`);
       window.location.href = '/onboarding';
-    } catch (error) {
-      throw error;
+    } catch {
+      throw new Error('Registration failed');
     }
   };
 

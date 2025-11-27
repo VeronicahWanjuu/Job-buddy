@@ -1,32 +1,34 @@
 import { Box, Typography, Button } from '@mui/material';
-import { Inbox as InboxIcon } from '@mui/icons-material';
+import SearchOffIcon from '@mui/icons-material/SearchOff';
 
 const EmptyState = ({
-  icon: IconComponent = InboxIcon,
+  icon: IconComponent = SearchOffIcon,
   title = 'No items found',
   message = 'Get started by adding your first item',
   actionLabel,
   onAction,
 }) => {
+  const Icon = IconComponent;
   return (
     <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      minHeight="300px"
-      textAlign="center"
-      p={4}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '300px',
+        p: 4,
+      }}
     >
-      <IconComponent sx={{ fontSize: 64, color: 'text.secondary', mb: 2 }} />
-      <Typography variant="h6" gutterBottom>
+      <Icon sx={{ fontSize: 80, color: 'text.secondary', mb: 2, opacity: 0.5 }} />
+      <Typography variant="h6" color="textSecondary" gutterBottom>
         {title}
       </Typography>
-      <Typography variant="body2" color="text.secondary" mb={3}>
+      <Typography variant="body2" color="textSecondary">
         {message}
       </Typography>
       {actionLabel && onAction && (
-        <Button variant="contained" onClick={onAction}>
+        <Button variant="contained" onClick={onAction} sx={{ mt: 2 }}>
           {actionLabel}
         </Button>
       )}

@@ -1,4 +1,3 @@
-// frontend/src/components/cv/CVAnalyzeTab.jsx
 import { useState } from 'react';
 import {
   Box,

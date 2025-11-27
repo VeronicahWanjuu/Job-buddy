@@ -11,7 +11,6 @@ import { VALID_STATUSES } from '../utils/constants';
 
 const ApplicationsPage = () => {
   const [loading, setLoading] = useState(true);
-  const [applications, setApplications] = useState([]);
   const [groupedApplications, setGroupedApplications] = useState({});
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [detailModalOpen, setDetailModalOpen] = useState(false);
@@ -25,20 +24,18 @@ const ApplicationsPage = () => {
     setLoading(true);
     try {
       const response = await api.get('/applications');
-      setApplications(response.data.applications);
       setGroupedApplications(response.data.grouped_by_status);
-    } catch (error) {
+    } catch {
       toast.error('Failed to load applications');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleDragEnd = async (result) => {
-    const { destination, source, draggableId } = result;
+      const handleDragEnd = async (result) => {
+        const { destination, source, draggableId } = result;
 
-    // Dropped outside the list
-    if (!destination) return;
+        if (!destination) return;
 
     // Dropped in same position
     if (
@@ -62,11 +59,9 @@ const ApplicationsPage = () => {
     try {
       await api.put(`/applications/${applicationId}`, { status: newStatus });
       toast.success(`Application moved to ${newStatus}`);
-      // Refresh to get updated data (including notifications, streak, goals)
       fetchApplications();
-    } catch (error) {
+    } catch {
       toast.error('Failed to update application status');
-      // Revert on error
       fetchApplications();
     }
   };
@@ -76,8 +71,7 @@ const ApplicationsPage = () => {
     setDetailModalOpen(true);
   };
 
-  const handleEdit = (application) => {
-    // TODO: Implement edit modal
+  const handleEdit = () => {
     toast.info('Edit functionality coming soon');
   };
 
@@ -90,7 +84,7 @@ const ApplicationsPage = () => {
       await api.delete(`/applications/${application.id}`);
       toast.success('Application deleted');
       fetchApplications();
-    } catch (error) {
+    } catch {
       toast.error('Failed to delete application');
     }
   };
@@ -100,26 +94,42 @@ const ApplicationsPage = () => {
   }
 
   return (
-    <Container maxWidth="xl">
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h4">Applications</Typography>
+    <Container maxWidth="xl" sx={{ py: 2, height: 'calc(100vh - 120px)', display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 3, position: 'relative' }}>
+        <Typography 
+          variant="h4" 
+          sx={{ 
+            textAlign: 'center',
+            textTransform: 'uppercase',
+            fontWeight: 700,
+            background: 'linear-gradient(135deg, #1e40af 0%, #06b6d4 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            letterSpacing: 2,
+          }}
+        >
+          Applications
+        </Typography>
         <Button
           variant="contained"
           startIcon={<Add />}
           onClick={() => setAddModalOpen(true)}
+          sx={{ position: 'absolute', right: 0 }}
         >
           Add Application
         </Button>
       </Box>
 
-      <KanbanBoard
+      <Box sx={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+        <KanbanBoard
         groupedApplications={groupedApplications}
         onDragEnd={handleDragEnd}
         onView={handleView}
         onEdit={handleEdit}
         onDelete={handleDelete}
         onAddNew={() => setAddModalOpen(true)}
-      />
+        />
+      </Box>
 
       <AddApplicationModal
         open={addModalOpen}

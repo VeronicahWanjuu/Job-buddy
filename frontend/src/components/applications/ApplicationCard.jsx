@@ -16,6 +16,17 @@ import { STATUS_COLORS } from '../../utils/constants';
 const ApplicationCard = ({ application, onView, onEdit, onDelete }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
+  const getStatusColor = (status) => {
+    const colors = {
+      'Planned': '#757575',
+      'Applied': '#2196F3',
+      'Interview': '#FF9800',
+      'Offer': '#4CAF50',
+      'Rejected': '#F44336'
+    };
+    return colors[status] || '#757575';
+  };
+
   const handleMenuOpen = (event) => {
     event.stopPropagation();
     setAnchorEl(event.currentTarget);
@@ -45,6 +56,8 @@ const ApplicationCard = ({ application, onView, onEdit, onDelete }) => {
       sx={{
         mb: 2,
         cursor: 'pointer',
+        borderLeft: '4px solid',
+        borderLeftColor: getStatusColor(application.status),
         '&:hover': {
           boxShadow: 3,
         },

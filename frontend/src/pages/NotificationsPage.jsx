@@ -24,7 +24,6 @@ const NotificationsPage = () => {
 
   useEffect(() => {
     fetchNotifications();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
   const fetchNotifications = async () => {
@@ -33,7 +32,7 @@ const NotificationsPage = () => {
       const url = filter === 'unread' ? '/notifications?unread=true' : '/notifications';
       const response = await api.get(url);
       setNotifications(response.data.notifications);
-    } catch (error) {
+    } catch {
       toast.error('Failed to load notifications');
     } finally {
       setLoading(false);
@@ -44,7 +43,7 @@ const NotificationsPage = () => {
     try {
       await api.put(`/notifications/${notificationId}/read`);
       fetchNotifications();
-    } catch (error) {
+    } catch {
       toast.error('Failed to mark notification as read');
     }
   };
@@ -54,7 +53,7 @@ const NotificationsPage = () => {
       await api.delete(`/notifications/${notificationId}`);
       toast.success('Notification deleted');
       fetchNotifications();
-    } catch (error) {
+    } catch {
       toast.error('Failed to delete notification');
     }
   };
@@ -64,7 +63,7 @@ const NotificationsPage = () => {
       await api.put('/notifications/read-all');
       toast.success('All notifications marked as read');
       fetchNotifications();
-    } catch (error) {
+    } catch {
       toast.error('Failed to mark all as read');
     }
   };
@@ -78,7 +77,7 @@ const NotificationsPage = () => {
       await api.delete('/notifications/clear-all');
       toast.success('All notifications cleared');
       fetchNotifications();
-    } catch (error) {
+    } catch {
       toast.error('Failed to clear notifications');
     }
   };
@@ -99,7 +98,20 @@ const NotificationsPage = () => {
 
   return (
     <Container maxWidth="md">
-      <Typography variant="h4" gutterBottom>
+      <Typography 
+        variant="h4" 
+        gutterBottom
+        sx={{ 
+          textAlign: 'center',
+          textTransform: 'uppercase',
+          fontWeight: 700,
+          background: 'linear-gradient(135deg, #1e40af 0%, #06b6d4 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          letterSpacing: 2,
+          mb: 3,
+        }}
+      >
         Notifications
       </Typography>
 

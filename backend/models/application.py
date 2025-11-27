@@ -207,7 +207,6 @@ class Application:
             params.append(status)
             self.status = status
             
-            # Auto-set applied_date when moving to 'Applied' status
             if status == 'Applied' and not self.applied_date:
                 updates.append('applied_date = ?')
                 params.append(date.today().isoformat())
@@ -226,7 +225,6 @@ class Application:
         if not updates:
             return False
         
-        # Trigger will auto-update updated_at
         params.append(self.id)
         
         try:
@@ -234,7 +232,6 @@ class Application:
                 UPDATE applications SET {', '.join(updates)} WHERE id = ?
             ''', tuple(params))
             
-            # Refresh updated_at from database
             app = Application.find_by_id(self.id)
             if app:
                 self.updated_at = app.updated_at
