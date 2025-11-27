@@ -8,7 +8,7 @@ services:
     plan: free
     branch: main
     buildCommand: "pip install -r backend/requirements.txt"
-    startCommand: "gunicorn --chdir backend --bind 0.0.0.0:$PORT app:app"
+    startCommand: "cd backend && gunicorn --bind 0.0.0.0:$PORT app:app"
     healthCheckPath: /health
     envVars:
       - key: FLASK_ENV
@@ -18,9 +18,9 @@ services:
       - key: JWT_SECRET_KEY
         value: HKL_iwPAEWn2mMzHpMMgbDKcQFOMxApg6pU8Fw1aW8w
       - key: DATABASE_URL
-        value: backend/jobbuddy.db
+        value: jobbuddy.db
       - key: UPLOAD_FOLDER
-        value: backend/uploads/cvs
+        value: uploads/cvs
       - key: MAX_FILE_SIZE_MB
         value: 5
       - key: ATS_SCORE_THRESHOLD

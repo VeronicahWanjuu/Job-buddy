@@ -17,7 +17,9 @@ class DevelopmentConfig(BaseConfig):
 
 class ProductionConfig(BaseConfig):
     DEBUG = False
-    DATABASE_URL = os.getenv("DATABASE_URL", "backend/jobbuddy.db")
+    # Use simple paths for production (we cd into backend folder first)
+    DATABASE_URL = os.getenv("DATABASE_URL", "jobbuddy.db")
+    UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", "uploads/cvs")
 
 class TestingConfig(BaseConfig):
     TESTING = True
